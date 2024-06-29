@@ -35,12 +35,12 @@ export default function (projectId, vmState, params) {
     if (creatingProject) {
         Object.assign(opts, {
             method: 'post',
-            url: `http://localhost:3000/scratch/projects/${qs}`
+            url: `${ process.env.APIHOST}/scratch/projects/${qs}`
         });
     } else {
         Object.assign(opts, {
             method: 'put',
-            url: `http://localhost:3000/scratch/projects/${projectId}${qs}`
+            url: `${ process.env.APIHOST}/scratch/projects/${projectId}${qs}`
         });
     }
     return new Promise((resolve, reject) => {

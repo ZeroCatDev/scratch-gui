@@ -195,8 +195,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         vm: PropTypes.instanceOf(VM)
     };
     ProjectFetcherComponent.defaultProps = {
-        assetHost: 'https://s4-1.wuyuan.1r.ink/material/asset',
-        projectHost: 'http://localhost:3000/scratch/play/project'
+        assetHost: process.env.ASSETSHOST,
+        projectHost: process.env.APIHOST + '/scratch/play/project'
     };
 
     const mapStateToProps = state => ({

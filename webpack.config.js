@@ -1,3 +1,6 @@
+require('dotenv').config({ override: true })
+
+
 const defaultsDeep = require('lodash.defaultsdeep');
 const path = require('path');
 const webpack = require('webpack');
@@ -135,7 +138,6 @@ const base = {
         })
     ]
 };
-
 if (!process.env.CI) {
     base.plugins.push(new webpack.ProgressPlugin());
 }
@@ -178,6 +180,8 @@ module.exports = [
         plugins: base.plugins.concat([
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
+                'process.env.APIHOST': `"${process.env.APIHOST}"`,
+                'process.env.ASSETSHOST': `"${process.env.ASSETSHOST}"`,
                 'process.env.DEBUG': Boolean(process.env.DEBUG),
                 'process.env.ENABLE_SERVICE_WORKER': JSON.stringify(process.env.ENABLE_SERVICE_WORKER || ''),
                 'process.env.ROOT': JSON.stringify(root),

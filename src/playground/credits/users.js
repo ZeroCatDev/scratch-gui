@@ -10,11 +10,11 @@ const shuffle = list => {
 
 const fromHardcoded = ({userID = '0', username}) => {
     const result = {
-        image: `http://localhost:3000/api/usertx?id=${userID}`,
+        image: `${ process.env.APIHOST}/api/usertx?id=${userID}`,
         text: username
     };
     if (username && userID !== '0') {
-        result.href = `http://localhost:3000/user?id=${userID}`;
+        result.href = `${ process.env.APIHOST}/user?id=${userID}`;
     }
     return result;
 };

@@ -16,6 +16,8 @@
     <% } %>
       <script src="http://localhost:5974/js/main.js"></script>
       <script src="http://localhost:5974/js/jquery.3.7.1.js"></script>
+      <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
+      <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
 
       <style>
         .splash-screen {
@@ -164,6 +166,10 @@
       if (!theme) {
         theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       }
+      var htmlElement = document.getElementsByTagName("html")[0];
+
+      htmlElement.classList.add('mdui-theme-' + theme);
+      mdui.setColorScheme("#2087fd")
 
       var splash = document.querySelector('.spash-waiting-for-js');
       splash.setAttribute('data-theme', theme);
@@ -231,6 +237,9 @@
 
 
   <script>
+    window.apiHost = '<%= process.env.APIHOST %>';
+    window.assetHost = '<%= process.env.ASSETSHOST %>';
+
     var _pid = 0
     var zctab = document.querySelector("#zerocat-tab");
     var logText = document.querySelector("#log-text");
@@ -280,7 +289,7 @@
           console.log(asset.clean);
           var formData = new FormData();
           $.ajax({
-            url: 'http://localhost:3000/scratch/assets/' + asset.assetId + '.' + asset.dataFormat,
+            url: window.apiHost + '/scratch/assets/' + asset.assetId + '.' + asset.dataFormat,
             type: 'POST',
             data: new Blob([data], { type: asset.assetType.contentType }),
             processData: false,
@@ -312,7 +321,7 @@
     var projectinfo = {}
 
     function getprojectinfo() {
-      AjaxGet("http://localhost:3000/scratch/projectinfo?id=" + _pid, {}, function (result) {
+      AjaxGet(window.apiHost + "/scratch/projectinfo?id=" + _pid, {}, function (result) {
         projectinfo = result
         zctab.headline = result.title
         zctab.description = `用户ID：${result.authorid}，作品ID：${result.id} ，${result.authorid == localStorage.getItem('id') ? '是你的作品' : '不是你的作品'}`
@@ -365,5 +374,3 @@
 </body>
 
 </html>
-<link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
-<script src="https://unpkg.com/mdui@2/mdui.global.js"></script>

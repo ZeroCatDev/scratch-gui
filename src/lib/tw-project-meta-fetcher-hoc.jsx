@@ -8,7 +8,7 @@ import {setAuthor, setDescription} from '../reducers/tw';
 
 export const fetchProjectMeta = async projectId => {
     const urls = [
-        `http://localhost:3000/scratch/projectinfo2?id=${projectId}`    ];
+        `${ process.env.APIHOST}/scratch/projectinfo2?id=${projectId}`    ];
     let firstError;
     for (const url of urls) {
         try {
@@ -68,7 +68,7 @@ const TWProjectMetaFetcherHOC = function (WrappedComponent) {
                             this.props.onSetProjectTitle(title);
                         }
                         const authorName = data.author.username;
-                        const authorThumbnail = `http://localhost:3000/api/usertx?id=${data.author.id}`;
+                        const authorThumbnail = `${ process.env.APIHOST}/api/usertx?id=${data.author.id}`;
                         this.props.onSetAuthor(authorName, authorThumbnail);
                         const instructions = data.instructions || '';
                         const credits = data.description || '';

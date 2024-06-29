@@ -46,7 +46,7 @@ const Description = ({
     <div className={styles.description}>
         <div className={styles.projectLink}>
             <a
-                href={`http://localhost:3000/scratch/play?id=${projectId}`}
+                href={`${ process.env.APIHOST}/scratch/play?id=${projectId}`}
                 target="_blank"
                 rel="noreferrer"
             >

@@ -38,6 +38,8 @@ a {
 }
 
 .container {
+    /*设置高度100vh，天知道会不会出bug*/
+    height:100vh;
     position: absolute;
     top: 0;
     left: 0;
@@ -63,6 +65,8 @@ a {
 }
 
 .footer {
+    /*隐藏掉，天知道会不会出bug*/
+    display: none;
     padding: 10px 0;
     margin-top: 10px;
     border-top: 2px solid $ui-black-transparent;
