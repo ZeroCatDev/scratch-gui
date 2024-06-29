@@ -59,6 +59,7 @@ const UsernameModalComponent = props => (
             ) : null}
             <Box>
                 <input
+                disabled
                     autoFocus
                     className={styles.textInput}
                     value={props.value}

@@ -8,7 +8,7 @@ import {defaultProjectId} from '../../reducers/project-state';
 import styles from './project-input.css';
 import {setProjectId} from '../../lib/tw-navigation-utils';
 
-const PROJECT_BASE = 'https://scratch.mit.edu/projects/';
+const PROJECT_BASE = 'http://localhost:3000/scratch/play?id=';
 
 const messages = defineMessages({
     tooltip: {
@@ -90,11 +90,9 @@ class ProjectInput extends React.Component {
                 ref={this.tooltipRef}
                 data-tip={this.props.intl.formatMessage(messages.tooltip)}
             >
-                <ReactTooltip
-                    className={styles.tooltip}
-                    effect="solid"
-                />
+
                 <input
+disabled
                     ref={this.inputRef}
                     spellCheck="false"
                     type="text"

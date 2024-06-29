@@ -32,7 +32,7 @@ describe('Loading scratch gui', () => {
 
         test('Nonexistent projects show error screen', async () => {
             await loadUri(`${uri}#999999999999999999999`);
-            await clickText('Oops! Something went wrong.');
+            await clickText('Oops! 出问题了~');
         });
 
         // skipping because it relies on network speed, and tests a method

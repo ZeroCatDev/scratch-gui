@@ -2,19 +2,19 @@ import React from 'react';
 import GUI from '../containers/gui.jsx';
 
 const searchParams = new URLSearchParams(location.search);
-const cloudHost = searchParams.get('cloud_host') || 'wss://clouddata.turbowarp.org';
+//searchParams.get('cloud_host') ||
+const cloudHost = 'wss://zerocat.houlangs.com/clouddata';
 
 const RenderGUI = props => (
     <GUI
         cloudHost={cloudHost}
         canUseCloud
         hasCloudPermission
-        canSave={false}
+        canSave
         basePath={process.env.ROOT}
-        canEditTitle
         enableCommunity
         {...props}
     />
 );
-
+//canEditTitle
 export default RenderGUI;

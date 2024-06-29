@@ -46,7 +46,7 @@ const Description = ({
     <div className={styles.description}>
         <div className={styles.projectLink}>
             <a
-                href={`https://scratch.mit.edu/projects/${projectId}/`}
+                href={`http://localhost:3000/scratch/play?id=${projectId}`}
                 target="_blank"
                 rel="noreferrer"
             >
@@ -69,7 +69,7 @@ const Description = ({
                 {decorate(instructions)}
             </div>
         ) : null}
-        {instructions && credits ? (
+       {/* {instructions && credits ? (
             <div className={styles.divider} />
         ) : null}
         {credits && (
@@ -83,7 +83,7 @@ const Description = ({
                 </h2>
                 {decorate(credits)}
             </div>
-        )}
+        )}*/}
     </div>
 );
 

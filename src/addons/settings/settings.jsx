@@ -126,7 +126,7 @@ const groupedAddons = groupAddons();
 
 const getInitialSearch = () => {
     const hash = location.hash.substring(1);
-    
+
     // If the query is an addon ID, it's a better user experience to show the name of the addon
     // in the search bar instead of a ID they won't understand.
     if (Object.prototype.hasOwnProperty.call(importedAddons, hash)) {
@@ -1102,7 +1102,7 @@ class AddonSettingsComponent extends React.Component {
                             />
                         </div>
                         <a
-                            href="https://scratch.mit.edu/users/GarboMuffin/#comments"
+                            href="https://qm.qq.com/q/wn3TkPoZ5C"
                             target="_blank"
                             rel="noreferrer"
                             className={styles.feedbackButtonOuter}

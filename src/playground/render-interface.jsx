@@ -83,13 +83,13 @@ if (AddonChannels.changeChannel) {
 runAddons();
 
 const Footer = () => (
-    <footer className={styles.footer}>
-        <div className={styles.footerContent}>
+   <footer className={styles.footer}>
+       {/*  <div className={styles.footerContent}>
             <div className={styles.footerText}>
                 <FormattedMessage
                     // eslint-disable-next-line max-len
-                    defaultMessage="{APP_NAME} is not affiliated with Scratch, the Scratch Team, or the Scratch Foundation."
-                    description="Disclaimer that TurboWarp is not connected to Scratch"
+                    defaultMessage="{APP_NAME} 不隶属于Scratch、Scratch团队或Scratch基金会。"
+                    description="免责声明：ZeroCat与Scratch无关"
                     id="tw.footer.disclaimer"
                     values={{
                         APP_NAME
@@ -135,11 +135,11 @@ const Footer = () => (
                 </div>
                 <div className={styles.footerSection}>
                     <a href="https://desktop.turbowarp.org/">
-                        {/* Do not translate */}
+
                         {'TurboWarp Desktop'}
                     </a>
                     <a href="https://packager.turbowarp.org/">
-                        {/* Do not translate */}
+
                         {'TurboWarp Packager'}
                     </a>
                     <a href="https://docs.turbowarp.org/embedding">
@@ -165,7 +165,7 @@ const Footer = () => (
                     </a>
                 </div>
                 <div className={styles.footerSection}>
-                    <a href="https://scratch.mit.edu/users/GarboMuffin/#comments">
+                    <a href="https://qm.qq.com/q/wn3TkPoZ5C">
                         <FormattedMessage
                             defaultMessage="Feedback & Bugs"
                             description="Link to feedback/bugs page"
@@ -188,7 +188,7 @@ const Footer = () => (
                     </a>
                 </div>
             </div>
-        </div>
+        </div>*/}
     </footer>
 );
 
@@ -346,7 +346,7 @@ class Interface extends React.Component {
                                 </p>
                             </div>
                             <div className={styles.section}>
-                                <FeaturedProjects studio="27205657" />
+                                <FeaturedProjects studio="0" />
                             </div>
                         </React.Fragment>
                     ) : null}

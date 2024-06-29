@@ -28,6 +28,7 @@ import {fetchProjectMeta} from './tw-project-meta-fetcher-hoc.jsx';
 
 // TW: Temporary hack for project tokens
 const fetchProjectToken = async projectId => {
+    return null;
     if (projectId === '0') {
         return null;
     }
@@ -194,8 +195,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         vm: PropTypes.instanceOf(VM)
     };
     ProjectFetcherComponent.defaultProps = {
-        assetHost: 'https://assets.scratch.mit.edu',
-        projectHost: 'https://projects.scratch.mit.edu'
+        assetHost: 'https://s4-1.wuyuan.1r.ink/material/asset',
+        projectHost: 'http://localhost:3000/scratch/play/project'
     };
 
     const mapStateToProps = state => ({

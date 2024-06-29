@@ -26,6 +26,7 @@ const ProjectTitleInput = ({
     projectTitle
 }) => (
     <BufferedInput
+    disabled
         className={classNames(styles.titleField, className)}
         maxLength="100"
         placeholder={intl.formatMessage(messages.projectTitlePlaceholder)}

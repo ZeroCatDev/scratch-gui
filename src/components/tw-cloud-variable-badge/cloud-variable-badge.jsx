@@ -8,8 +8,20 @@ import {APP_NAME} from '../../lib/brand';
 
 const hosts = [
     {
+        name: 'ZeroCat',
+        cloudHost: 'wss://zerocat.houlangs.com/clouddata',
+        provider: {
+            name: 'ZeroCat',
+            href: '#'
+        }
+    },
+    {
         name: 'US East',
-        cloudHost: 'wss://clouddata.turbowarp.org'
+        cloudHost: 'wss://clouddata.turbowarp.org',
+        provider: {
+            name: 'turbowarp',
+            href: 'https://turbowarp.org/'
+        }
     },
     {
         name: 'EU',
@@ -41,7 +53,7 @@ const CloudVariableBadge = props => {
                     id="tw.usesCloudVariables"
                 />
             </div>
-    
+
             <FormattedMessage
                 // eslint-disable-next-line max-len
                 defaultMessage="{APP_NAME}'s cloud variables are not connected to Scratch's. Anyone can {changeTheirUsername} to anything, so beware of impersonation."
@@ -62,7 +74,7 @@ const CloudVariableBadge = props => {
                     )
                 }}
             />
-    
+
             {selectedHost ? (
                 <div className={styles.servers}>
                     <FormattedMessage
@@ -110,8 +122,8 @@ const CloudVariableBadge = props => {
                     }}
                 />
             )}
-    
-            <a
+
+            {/*<a
                 target="_blank"
                 rel="noreferrer"
                 href="https://docs.turbowarp.org/cloud-variables"
@@ -121,7 +133,7 @@ const CloudVariableBadge = props => {
                     description="Link for more information about cloud variables"
                     id="tw.moreCloud"
                 />
-            </a>
+            </a>*/}
         </div>
     );
 };

@@ -153,9 +153,9 @@ class LoaderComponent extends React.Component {
                             className={styles.prideMonth}
                             lang="en"
                         >
-                            <b>{'Pride Month Fun Fact:'}</b>{' '}
+                            <b>{'正在加载作品'}</b>{' '}
                             {/* eslint-disable-next-line max-len */}
-                            {'Significant parts of TurboWarp were created by transgender people.'}
+                            {'数据文件从ZeroCat服务器加载，卡住请刷新'}
                         </div>
                     )}
                 </div>
