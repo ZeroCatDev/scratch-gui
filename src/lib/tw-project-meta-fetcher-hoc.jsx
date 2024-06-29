@@ -76,6 +76,7 @@ const TWProjectMetaFetcherHOC = function (WrappedComponent) {
                             this.props.onSetDescription(instructions, credits);
                         }
                         setIndexable(true);
+
                     })
                         .catch(err => {
                             setIndexable(false);

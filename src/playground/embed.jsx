@@ -37,10 +37,11 @@ const onVmInit = _vm => {
 };
 
 const onProjectLoaded = () => {
-    if (urlParams.has('autoplay')) {
-        vm.start();
-        vm.greenFlag();
-    }
+    //if (urlParams.has('autoplay')) {
+    //    vm.start();
+    //    vm.greenFlag();
+    //}
+    //自动播放
 };
 
 const WrappedGUI = compose(

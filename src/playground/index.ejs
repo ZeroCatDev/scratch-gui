@@ -1,198 +1,369 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google" value="notranslate">
-    <meta name="description" content="<%= htmlWebpackPlugin.options.APP_NAME %> is a Scratch mod with a compiler to run projects faster, dark mode for your eyes, a bunch of addons to improve the editor, and more." />
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.options.root %>images/apple-touch-icon.png">
-    <% if (htmlWebpackPlugin.options.root === "/" || htmlWebpackPlugin.options.root === "") { %>
-      <link rel="manifest" href="<%= htmlWebpackPlugin.options.root %>manifest.webmanifest">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google" value="notranslate">
+  <meta name="description"
+    content="<%= htmlWebpackPlugin.options.APP_NAME %> is a Scratch mod with a compiler to run projects faster, dark mode for your eyes, a bunch of addons to improve the editor, and more." />
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+  <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.options.root %>images/apple-touch-icon.png">
+  <% if (htmlWebpackPlugin.options.root==="/" || htmlWebpackPlugin.options.root==="" ) { %>
+    <link rel="manifest" href="<%= htmlWebpackPlugin.options.root %>manifest.webmanifest">
     <% } %>
-    <style>
-      .splash-screen {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      }
-      .splash-screen[hidden] {
-        display: none;
-      }
-      .splash-screen[data-theme="dark"] {
-        background-color: #333;
-        color: white;
-      }
-      .splash-screen > * {
-        max-width: 80%;
-      }
-      .splash-spinner:after {
-        content: " ";
-        display: block;
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        border: 6px solid;
-        border-color: currentColor transparent currentColor transparent;
-        animation: splash-spinner 1.2s linear infinite;
-      }
-      @keyframes splash-spinner {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      .splash-error-title {
-        font-weight: bold;
-      }
-      .splash-error-title a {
-        color: inherit;
-      }
-      .splash-errors {
-        font-family: monospace;
-      }
-      .splash-error-list {
-        white-space: pre-wrap;
-      }
-      .splash-reset {
-        color: inherit;
-        background: none;
-        padding: 0;
-        margin: 0;
-        border: none;
-        text-decoration: underline;
-        cursor: pointer;
-      }
-      .splash-reset:disabled {
-        opacity: 0.8;
-      }
+      <script src="http://localhost:5974/js/main.js"></script>
+      <script src="http://localhost:5974/js/jquery.3.7.1.js"></script>
 
-      .splash-pride-month {
-        max-width: 350px;
-      }
-    </style>
-  </head>
-  <body>
-    <noscript>
-      <div class="splash-screen">
-        <div>
-          <h1><%= htmlWebpackPlugin.options.APP_NAME %> 需要使用杨博士自主研发遥遥领先的JvavScript</h1>
-          <p>兄弟你咋想的？</p>
-        </div>
+      <style>
+        .splash-screen {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .splash-screen[hidden] {
+          display: none;
+        }
+
+        .splash-screen[data-theme="dark"] {
+          background-color: #333;
+          color: white;
+        }
+
+        .splash-screen>* {
+          max-width: 80%;
+        }
+
+        .splash-spinner:after {
+          content: " ";
+          display: block;
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          border: 6px solid;
+          border-color: currentColor transparent currentColor transparent;
+          animation: splash-spinner 1.2s linear infinite;
+        }
+
+        @keyframes splash-spinner {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        .splash-error-title {
+          font-weight: bold;
+        }
+
+        .splash-error-title a {
+          color: inherit;
+        }
+
+        .splash-errors {
+          font-family: monospace;
+        }
+
+        .splash-error-list {
+          white-space: pre-wrap;
+        }
+
+        .splash-reset {
+          color: inherit;
+          background: none;
+          padding: 0;
+          margin: 0;
+          border: none;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
+        .splash-reset:disabled {
+          opacity: 0.8;
+        }
+
+        .splash-pride-month {
+          max-width: 350px;
+        }
+      </style>
+</head>
+
+<body>
+  <noscript>
+    <div class="splash-screen">
+      <div>
+        <h1>
+          <%= htmlWebpackPlugin.options.APP_NAME %> 需要使用杨博士自主研发遥遥领先的JvavScript
+        </h1>
+        <p>兄弟你咋想的？</p>
       </div>
-    </noscript>
+    </div>
+  </noscript>
 
-    <div class="splash-screen spash-waiting-for-js" hidden>
-      <div class="splash-spinner"></div>
+  <div class="splash-screen spash-waiting-for-js" hidden>
+    <div class="splash-spinner"></div>
 
-      <div class="splash-pride-month" lang="en">
-        <b>正在加载作品</b>
-        数据文件从ZeroCat服务器加载，卡住请刷新
-      </div>
-
-      <div class="splash-error-title" hidden>出问题了~ <a href="https://qm.qq.com/q/wn3TkPoZ5C" target="_blank" rel="noreferrer">Please report</a> with the information below.</div>
-      <div class="splash-errors" hidden></div>
-      <button class="splash-reset" hidden>Click here to reset caches (can fix some errors)</button>
+    <div class="splash-pride-month" lang="en">
+      <b>正在加载作品</b>
+      数据文件从ZeroCat服务器加载，卡住请刷新
     </div>
 
-    <script>
-      (function () {
-        'use strict';
+    <div class="splash-error-title" hidden>出问题了~ <a href="https://qm.qq.com/q/wn3TkPoZ5C" target="_blank"
+        rel="noreferrer">Please report</a> with the information below.</div>
+    <div class="splash-errors" hidden></div>
+    <button class="splash-reset" hidden>Click here to reset caches (can fix some errors)</button>
+  </div>
 
-        var theme = '';
-        var accent = '#ff4c4c';
+  <script>
+    (function () {
+      'use strict';
 
+      var theme = '';
+      var accent = '#ff4c4c';
+
+      try {
+        var themeSetting = localStorage.getItem('tw:theme');
+      } catch (e) {
+        // ignore
+      }
+      if (themeSetting === 'light') {
+        theme = 'light';
+      } else if (themeSetting === 'dark') {
+        theme = 'dark';
+      } else if (themeSetting) {
         try {
-          var themeSetting = localStorage.getItem('tw:theme');
+          var parsed = JSON.parse(themeSetting);
+          if (parsed.accent === 'purple') {
+            accent = '#855cd6';
+          } else if (parsed.accent === 'blue') {
+            accent = '#4c97ff';
+          }
+          if (parsed.gui === 'dark' || parsed.gui === 'light') {
+            theme = parsed.gui;
+          }
         } catch (e) {
           // ignore
         }
-        if (themeSetting === 'light') {
-          theme = 'light';
-        } else if (themeSetting === 'dark') {
-          theme = 'dark';
-        } else if (themeSetting) {
-          try {
-            var parsed = JSON.parse(themeSetting);
-            if (parsed.accent === 'purple') {
-              accent = '#855cd6';
-            } else if (parsed.accent === 'blue') {
-              accent = '#4c97ff';
-            }
-            if (parsed.gui === 'dark' || parsed.gui === 'light') {
-              theme = parsed.gui;
-            }
-          } catch (e) {
-            // ignore
-          }
-        }
+      }
 
-        if (!theme) {
-          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
 
-        var splash = document.querySelector('.spash-waiting-for-js');
-        splash.setAttribute('data-theme', theme);
-        if (theme !== 'dark') {
+      var splash = document.querySelector('.spash-waiting-for-js');
+      splash.setAttribute('data-theme', theme);
+      if (theme !== 'dark') {
           <% if (htmlWebpackPlugin.options.isEditor) { %>
-            splash.style.backgroundColor = accent;
-            splash.style.color = 'white';
+          splash.style.backgroundColor = accent;
+          splash.style.color = 'white';
           <% } else { %>
-            splash.style.color = accent;
+          splash.style.color = accent;
           <% } %>
         }
-        splash.hidden = false;
+      splash.hidden = false;
 
-        var splashErrorTitle = document.querySelector('.splash-error-title');
-        var splashError = document.querySelector('.splash-errors');
-        var splashReset = document.querySelector('.splash-reset');
-        var splashPrideMonth = document.querySelector('.splash-pride-month');
+      var splashErrorTitle = document.querySelector('.splash-error-title');
+      var splashError = document.querySelector('.splash-errors');
+      var splashReset = document.querySelector('.splash-reset');
+      var splashPrideMonth = document.querySelector('.splash-pride-month');
 
-        var totalErrors = 0;
-        window.onerror = function (event, source, line, col, err) {
-          if (++totalErrors > 5) return; // dont bother logging more
-          splashErrorTitle.hidden = splashError.hidden = splashReset.hidden = false;
-          splashPrideMonth.hidden = true;
-          var el = document.createElement('div');
-          el.textContent = 'Error (splash) in ' + source + ' (' + line + ':' + col + '): ' + err;
-          splashError.appendChild(el);
-        };
+      var totalErrors = 0;
+      window.onerror = function (event, source, line, col, err) {
+        if (++totalErrors > 5) return; // dont bother logging more
+        splashErrorTitle.hidden = splashError.hidden = splashReset.hidden = false;
+        splashPrideMonth.hidden = true;
+        var el = document.createElement('div');
+        el.textContent = 'Error (splash) in ' + source + ' (' + line + ':' + col + '): ' + err;
+        splashError.appendChild(el);
+      };
 
-        splashReset.onclick = function () {
-          splashReset.disabled = true;
-          function hardRefresh() {
-            var search = location.search.replace(/[?&]nocache=\d+/, '');
-            location.replace(location.pathname + search + (search ? '&' : '?') + 'nocache=' + Math.floor(Math.random() * 100000));
-          }
-          if ('serviceWorker' in navigator) {
-            setTimeout(hardRefresh, 5000);
-            navigator.serviceWorker.getRegistration(<%= JSON.stringify(htmlWebpackPlugin.options.root) %>)
-              .then(function(registration) {
-                if (registration) {
-                  return registration.unregister();
-                }
-              })
-              .then(hardRefresh)
-              .catch(hardRefresh);
+      splashReset.onclick = function () {
+        splashReset.disabled = true;
+        function hardRefresh() {
+          var search = location.search.replace(/[?&]nocache=\d+/, '');
+          location.replace(location.pathname + search + (search ? '&' : '?') + 'nocache=' + Math.floor(Math.random() * 100000));
+        }
+        if ('serviceWorker' in navigator) {
+          setTimeout(hardRefresh, 5000);
+          navigator.serviceWorker.getRegistration(<%= JSON.stringify(htmlWebpackPlugin.options.root) %>)
+            .then(function (registration) {
+              if (registration) {
+                return registration.unregister();
+              }
+            })
+            .then(hardRefresh)
+            .catch(hardRefresh);
+        } else {
+          hardRefresh();
+        }
+      };
+
+      window.SplashEnd = () => {
+        splash.hidden = true;
+        window.onerror = null;
+      };
+    })();
+  </script>
+
+  <mdui-dialog headline="作品" description="Images will be permenantly removed from you account and all synced devices."
+    close-on-overlay-click class="example-headline" id="zerocat-tab">
+
+    <mdui-button id="savestatic" onclick="uploadAssets()">保存媒体库</mdui-button>
+    <mdui-button onclick="logText.innerText = 'log:'">清空log</mdui-button>
+
+    <div id="log-text"></div>
+  </mdui-dialog>
+
+
+  <script>
+    var _pid = 0
+    var zctab = document.querySelector("#zerocat-tab");
+    var logText = document.querySelector("#log-text");
+    window.onload = function () {
+      var openzctabButton = document.querySelector("#open-zerocat-tab");
+
+
+      openzctabButton.addEventListener("click", () => zctab.open = true);
+      if (window.location.hash) {
+        _pid = window.location.hash.match(/\d+/i)[0]
+      }
+      window.scratchConfig = {
+        handleProjectLoaded: () => {
+          console.log("作品ID为" + _pid);
+          if (_pid !== 0) {
+            console.log("加载作品信息");
+            getprojectinfo();
           } else {
-            hardRefresh();
+            console.log("作品ID为0");
+            setSaveButton()
           }
-        };
+        },
+        handleDefaultProjectLoaded: () => {
+          setSaveButton()
+          console.log("默认作品");
+        },
+      }
+    };
+    function getTime() {
+      var now = new Date();
+      var hours = now.getHours();
+      var minutes = now.getMinutes();
+      var seconds = now.getSeconds();
 
-        window.SplashEnd = () => {
-          splash.hidden = true;
-          window.onerror = null;
-        };
-      })();
-    </script>
+      return hours + ':' + minutes + ':' + seconds;
+    }
 
-    <div id="app"></div>
-  </body>
+
+    function uploadAssets() {
+
+      // 遍历assets数组
+      $.each(vm.assets, function (index, asset) {
+        // 获取data属性值
+        var data = asset.data;
+        if (asset.clean == false) {
+          // 创建一个FormData对象
+          console.log(asset.clean);
+          var formData = new FormData();
+          $.ajax({
+            url: 'http://localhost:3000/scratch/assets/' + asset.assetId + '.' + asset.dataFormat,
+            type: 'POST',
+            data: new Blob([data], { type: asset.assetType.contentType }),
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              logText.innerText += `[${getTime()}]文件上传成功${asset.assetId}.${asset.dataFormat}\n`;
+              console.log('文件上传成功:', asset.assetId + '.' + asset.dataFormat);
+              asset.clean = true
+
+            },
+            error: function (xhr, status, error) {
+              logText.innerText += `[${getTime()}]文件上传失败${asset.assetId}.${asset.dataFormat}\nerror:${error}\n`;
+
+              console.error('文件上传失败:', asset.assetId + '.' + asset.dataFormat, error);
+            }
+
+          });
+        } else {
+          logText.innerText += `[${getTime()}]文件未修改${asset.assetId}.${asset.dataFormat}\n`;
+
+          console.log('文件未修改:', asset.assetId + '.' + asset.dataFormat);
+        }
+      })
+    }
+
+
+
+
+    var projectinfo = {}
+
+    function getprojectinfo() {
+      AjaxGet("http://localhost:3000/scratch/projectinfo?id=" + _pid, {}, function (result) {
+        projectinfo = result
+        zctab.headline = result.title
+        zctab.description = `用户ID：${result.authorid}，作品ID：${result.id} ，${result.authorid == localStorage.getItem('id') ? '是你的作品' : '不是你的作品'}`
+
+        console.log("成功获取作品信息");
+        console.log(result);
+
+        if (result.authorid === localStorage.getItem('id')) {
+          console.log("作品作者为当前用户");
+          setSaveButton()
+        }
+        if (result.authorid != localStorage.getItem('id')) {
+          console.log("作品作者不是当前用户");
+          setForkButton()
+        }
+
+
+
+      });
+
+    }
+    function setSaveButton() {
+      document.getElementById("push-button").innerText = '保存'
+      document.getElementById("push-button").onclick = function () {
+        pushproject()
+      };
+      console.log("设置保存按钮");
+    }
+    function setForkButton() {
+      document.getElementById("push-button").innerText = '改编'
+      document.getElementById("push-button").onclick = function () {
+        forkproject()
+      }
+      console.log("设置改编按钮");
+
+
+    }
+    function pushproject() {
+      alert('push')
+    }
+    function forkproject() {
+      history.pushState('B', 'B', window.location.pathname + window.location.search);
+      setSaveButton()
+    }
+
+
+
+  </script>
+  <div id="app"></div>
+</body>
+
 </html>
+<link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
+<script src="https://unpkg.com/mdui@2/mdui.global.js"></script>

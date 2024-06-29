@@ -111,6 +111,15 @@
     height: 34px;
 }
 
+.zerocat-link {
+    color: $menu-bar-background;
+    text-decoration: none;
+}
+.zerocat-button {
+    background-color: white;
+    color: inherit;
+    height: 34px;
+}
 .divider {
     height: 34px;
 }

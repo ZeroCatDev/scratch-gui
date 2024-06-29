@@ -23,6 +23,7 @@ export default function (projectId, vmState, params) {
         },
         withCredentials: true
     };
+
     const creatingProject = projectId === null || typeof projectId === 'undefined';
     const queryParams = {};
     if (Object.prototype.hasOwnProperty.call(params, 'originalId')) queryParams.original_id = params.originalId;
@@ -30,16 +31,16 @@ export default function (projectId, vmState, params) {
     if (Object.prototype.hasOwnProperty.call(params, 'isRemix')) queryParams.is_remix = params.isRemix;
     if (Object.prototype.hasOwnProperty.call(params, 'title')) queryParams.title = params.title;
     let qs = queryString.stringify(queryParams);
-    if (qs) qs = `?${qs}`;
+    if (qs) qs = `?${qs}&token=${localStorage.getItem('token')}`;
     if (creatingProject) {
         Object.assign(opts, {
             method: 'post',
-            url: `${storage.projectHost}/${qs}`
+            url: `http://localhost:3000/scratch/projects/${qs}`
         });
     } else {
         Object.assign(opts, {
             method: 'put',
-            url: `${storage.projectHost}/${projectId}${qs}`
+            url: `http://localhost:3000/scratch/projects/${projectId}${qs}`
         });
     }
     return new Promise((resolve, reject) => {

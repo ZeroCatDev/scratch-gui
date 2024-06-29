@@ -1,7 +1,7 @@
 import React from 'react';
 import GUI from '../containers/gui.jsx';
 
-const searchParams = new URLSearchParams(location.search);
+//const searchParams = new URLSearchParams(location.search);
 //searchParams.get('cloud_host') ||
 const cloudHost = 'wss://zerocat.houlangs.com/clouddata';
 

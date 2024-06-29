@@ -1017,6 +1017,14 @@ class MenuBar extends React.Component {
                             </Button>
                         </a>
                     </div>
+
+                    <div className={styles.menuBarItem}>
+                    <mdui-button id='open-zerocat-tab' >zerocat</mdui-button>
+
+                    <mdui-button id='push-button' >zerocat</mdui-button>
+
+
+                    </div>
                 </div>
 
                 <div className={styles.accountInfoGroup}>

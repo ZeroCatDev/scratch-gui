@@ -59,6 +59,45 @@ class GUI extends React.Component {
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
         setProjectIdMetadata(this.props.projectId);
+        window.scratch = window.scratch || {}
+        var that = this
+        document.addEventListener("loadProject",function(e){
+            that.loadProjectByURL(e.detail.url, e.detail.callback)
+        })
+        document.addEventListener("getProjectFile",function(e){
+            that.getProjectFile(e.detail.callback)
+        })
+        document.addEventListener("getProjectCover",function(e){
+            that.getProjectCover(e.detail.callback)
+        })
+        document.addEventListener("getProjectCoverBlob",function(e){
+            that.getProjectCoverBlob(e.detail.callback)
+        })
+
+        window.scratch.getProjectCover = (callback)=>{
+            var event = new CustomEvent('getProjectCover', {"detail": {callback: callback}});
+            document.dispatchEvent(event);
+        }
+
+        window.scratch.getProjectCoverBlob = (callback)=>{
+            var event = new CustomEvent('getProjectCoverBlob', {"detail": {callback: callback}});
+            document.dispatchEvent(event);
+        }
+
+        window.scratch.getProjectFile = (callback)=>{
+            var event = new CustomEvent('getProjectFile', {"detail": {callback: callback}});
+            document.dispatchEvent(event);
+        }
+
+        window.scratch.loadProject = (url, callback)=>{
+            var event = new CustomEvent('loadProject', {"detail": {url: url,callback:callback }});
+            document.dispatchEvent(event);
+        }
+
+        if(window.scratchConfig && 'handleVmInitialized' in window.scratchConfig){
+            window.scratchConfig.handleVmInitialized(this.props.vm)
+        }
+        console.log("OpenScratch https://github.com/open-scratch")
     }
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId) {
@@ -71,7 +110,39 @@ class GUI extends React.Component {
             // this only notifies container when a project changes from not yet loaded to loaded
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
+            if(window.scratchConfig && 'handleProjectLoaded' in window.scratchConfig){
+                window.scratchConfig.handleProjectLoaded()
+            }
+
+            //加载默认项目回调
+            if(!this.isDefaultProjectLoaded){
+                this.isDefaultProjectLoaded = true
+                if(window.scratchConfig && 'handleDefaultProjectLoaded' in window.scratchConfig){
+                    window.scratchConfig.handleDefaultProjectLoaded()
+                }
+            }
         }
+    }
+
+    getProjectFile(callback){
+        this.props.vm.saveProjectSb3().then(res=>{
+            callback(res)
+        })
+    }
+    getProjectCover (callback) {
+        this.props.vm.postIOData('video', {forceTransparentPreview: true});
+        this.props.vm.renderer.requestSnapshot(dataURI => {
+            this.props.vm.postIOData('video', {forceTransparentPreview: false});
+            callback(dataURI);
+        });
+        this.props.vm.renderer.draw();
+    }
+    getProjectCoverBlob(callback){
+        this.props.vm.renderer.draw()
+        let canvas = vm.renderer.canvas
+        canvas.toBlob(function(blob) {
+          callback(blob)
+        })
     }
     render () {
         if (this.props.isError) {

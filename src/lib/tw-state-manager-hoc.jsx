@@ -300,12 +300,12 @@ const TWStateManager = function (WrappedComponent) {
                 this.props.vm.setInterpolation(true);
             }
 
-            if (urlParams.has('username')) {
-                const username = urlParams.get('username');
-                // Do not save username when loaded from URL
-                this.doNotPersistUsername = username;
-                this.props.onSetUsername(username);
-            } else {
+            //if (urlParams.has('username')) {
+            //    const username = urlParams.get('username');
+            //    // Do not save username when loaded from URL
+            //    this.doNotPersistUsername = username;
+            //    this.props.onSetUsername(username);
+            //} else {
                 const persistentUsername = this.props.isEmbedded ? null : getLocalStorage(USERNAME_KEY);
                 if (persistentUsername === null) {
                     const randomUsername = generateRandomUsername();
@@ -316,7 +316,7 @@ const TWStateManager = function (WrappedComponent) {
                 } else {
                     this.props.onSetUsername(persistentUsername);
                 }
-            }
+            //}
 
             if (urlParams.has('hqpen')) {
                 this.props.vm.renderer.setUseHighQualityRender(true);
