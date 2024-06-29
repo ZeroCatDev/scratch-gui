@@ -24,7 +24,9 @@ npm-*
 # Downloaded during "npm install"
 /static/microbit
 
+.env
+
+
 # for act
 .secrets
 
-.env
