@@ -226,11 +226,10 @@
     })();
   </script>
 
-  <mdui-dialog headline="作品" description="Images will be permenantly removed from you account and all synced devices."
-    close-on-overlay-click class="example-headline" id="zerocat-tab">
+  <mdui-dialog headline="作品" description="加载中" close-on-overlay-click class="example-headline" id="zerocat-tab">
 
     <mdui-button id="savestatic" onclick="uploadAssets()">保存媒体库</mdui-button>
-    <mdui-button onclick="logText.innerText = 'log:'">清空log</mdui-button>
+    <mdui-button onclick="logText.innerText = ''">清空log</mdui-button>
 
     <div id="log-text"></div>
   </mdui-dialog>
@@ -240,34 +239,71 @@
     window.apiHost = '<%= process.env.APIHOST %>';
     window.assetHost = '<%= process.env.ASSETSHOST %>';
 
-    var _pid = 0
-    var zctab = document.querySelector("#zerocat-tab");
-    var logText = document.querySelector("#log-text");
+    // 论如何跳过天才群星闪耀时任务
+    window.apihost = '<%= process.env.APIHOST %>'
+    window.assethost = '<%= process.env.ASSETSHOST %>';
+
+    var _pid = {}
+    var logText = {}
+    var zctab = {}
+    var openzctabButton = {}
+    var pushbutton = {}
+    var projectjson={}
     window.onload = function () {
-      var openzctabButton = document.querySelector("#open-zerocat-tab");
+      load()
+      zctab = document.querySelector("#zerocat-tab");
 
-
+      openzctabButton = document.querySelector("#open-zerocat-tab");
+      _pid = 0
       openzctabButton.addEventListener("click", () => zctab.open = true);
+      logText = document.querySelector("#log-text");
+
+      pushbutton = document.querySelector("#push-button");
+
+
+    };
+    function zctabopen() {
+      zctab.open = true
+
+    }
+    window.zctabopen = zctabopen;
+
+
+    function load() {
+
+      console.log('加载')
+
       if (window.location.hash) {
         _pid = window.location.hash.match(/\d+/i)[0]
       }
-      window.scratchConfig = {
-        handleProjectLoaded: () => {
-          console.log("作品ID为" + _pid);
-          if (_pid !== 0) {
-            console.log("加载作品信息");
-            getprojectinfo();
-          } else {
-            console.log("作品ID为0");
-            setSaveButton()
-          }
-        },
-        handleDefaultProjectLoaded: () => {
-          setSaveButton()
-          console.log("默认作品");
-        },
+      console.log("作品ID为" + _pid);
+      if (_pid !== 0) {
+        console.log("加载作品信息");
+        getprojectinfo();
+      } else {
+        console.log("作品ID为0");
+        setSaveButton()
       }
-    };
+    }
+    window.scratchConfig = {
+
+      handleProjectLoaded: () => {
+        load()
+        console.log("作品ID为" + _pid);
+        if (_pid !== 0) {
+          console.log("加载作品信息");
+          getprojectinfo();
+        } else {
+          console.log("作品ID为0");
+          setSaveButton()
+        }
+      },
+      handleDefaultProjectLoaded: () => {
+        setSaveButton()
+        console.log("默认作品");
+      },
+    }
+
     function getTime() {
       var now = new Date();
       var hours = now.getHours();
@@ -289,7 +325,7 @@
           console.log(asset.clean);
           var formData = new FormData();
           $.ajax({
-            url: window.apiHost + '/scratch/assets/' + asset.assetId + '.' + asset.dataFormat,
+            url: window.apiHost + '/scratch/assets/' + asset.assetId + '.' + asset.dataFormat + '?token=' + localStorage.getItem('token'),
             type: 'POST',
             data: new Blob([data], { type: asset.assetType.contentType }),
             processData: false,
@@ -314,33 +350,59 @@
         }
       })
     }
+function uploadProject(){
+  $.ajax({
+        url: window.apiHost + '/scratch/projects/' + projectinfo.id + '?token=' + localStorage.getItem('token'),
+        type: 'PUT',
+        data: vm.toJSON(),
+        contentType: 'application/json',
 
+        success: function (result) {
+          console.log('作品保存成功')
+          console.log(result)
+        },
+        error: function (err) {
+          console.log(err);
+        }
+      });
+
+}
 
 
 
     var projectinfo = {}
-
+    window.projectinfo = projectinfo;
     function getprojectinfo() {
-      AjaxGet(window.apiHost + "/scratch/projectinfo?id=" + _pid, {}, function (result) {
-        projectinfo = result
-        zctab.headline = result.title
-        zctab.description = `用户ID：${result.authorid}，作品ID：${result.id} ，${result.authorid == localStorage.getItem('id') ? '是你的作品' : '不是你的作品'}`
-
-        console.log("成功获取作品信息");
-        console.log(result);
-
-        if (result.authorid === localStorage.getItem('id')) {
-          console.log("作品作者为当前用户");
-          setSaveButton()
-        }
-        if (result.authorid != localStorage.getItem('id')) {
-          console.log("作品作者不是当前用户");
-          setForkButton()
-        }
 
 
+      $.ajax({
+        url: window.apiHost + "/scratch/projectinfo?id=" + _pid,
+        type: "GET",
+        data: { token: localStorage.getItem('token') },
+        success: function (result) {
+          window.projectinfo = result
+          zctab.headline = result.title
+          zctab.description = `用户ID：${result.authorid}，作品ID：${result.id} ，${result.authorid == localStorage.getItem('id') ? '是你的作品' : '不是你的作品'}`
 
+          console.log("成功获取作品信息");
+          console.log(result);
+
+          if (result.authorid === localStorage.getItem('id')) {
+            console.log("作品作者为当前用户");
+            setSaveButton()
+          }
+          if (result.authorid != localStorage.getItem('id')) {
+            console.log("作品作者不是当前用户");
+            setForkButton()
+          }
+
+        },
+        error: function (err) {
+          automsg(err);
+        },
       });
+
+
 
     }
     function setSaveButton() {
@@ -360,11 +422,57 @@
 
     }
     function pushproject() {
-      alert('push')
+      uploadAssets()
+      if(!projectjson || projectjson!=vm.toJSON()){
+         projectjson=vm.toJSON()
+         if (window.projectinfo.authorid == localStorage.getItem('id')) {
+          uploadProject()
+          console.log("保存完成");
+
+          logText.innerText += `[${getTime()}]保存完成\n`;
+
+         return '保存完成'
+        }
+      }
+      if(projectjson=vm.toJSON()){
+        console.log("作品未修改");
+        logText.innerText += `[${getTime()}]作品未修改\n`;
+        return "作品未修改"
+      }
+
+
+
     }
     function forkproject() {
-      history.pushState('B', 'B', window.location.pathname + window.location.search);
-      setSaveButton()
+
+
+      getprojectinfo()
+      if (window.projectinfo.authorid == localStorage.getItem('id')) {
+
+        console.log("作品作者是当前用户");
+        return "作品作者是当前用户"
+      }
+      if (!localStorage.getItem('id')) {
+
+        console.log("你登录了吗");
+        return "你登录了吗"
+      }
+      if (window.projectinfo.authorid != localStorage.getItem('id')) {
+        console.log("处理改编");
+        $.ajax({
+          url: window.apiHost + '/scratch/projects?token=' + localStorage.getItem('token'),
+          type: 'POST',
+          data: { work: vm.toJSON() },
+          success: function (result) {
+            console.log('上传作品成功')
+            console.log(result)
+            location.href = ("/editor.html#" + result.id)
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      }
     }
 
 

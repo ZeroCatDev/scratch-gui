@@ -1019,9 +1019,9 @@ class MenuBar extends React.Component {
                     </div>
 
                     <div className={styles.menuBarItem}>
-                    <mdui-button id='open-zerocat-tab' >zerocat</mdui-button>
+                    <mdui-button id='open-zerocat-tab'>ZeroCat</mdui-button>
 
-                    <mdui-button id='push-button' >zerocat</mdui-button>
+                    <mdui-button id='push-button'>加载中</mdui-button>
 
 
                     </div>
