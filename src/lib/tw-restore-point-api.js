@@ -477,7 +477,7 @@ const loadRestorePoint = (vm, id) => openDB().then(db => new Promise((resolvePro
         transaction.onerror = () => {
             rejectProject(new Error(`Transaction error: ${transaction.error}`));
         };
-    
+
         const projectStore = transaction.objectStore(PROJECT_STORE);
         const request = projectStore.get(id);
         request.onsuccess = () => {
@@ -586,7 +586,7 @@ const deleteLegacyRestorePoint = () => {
 };
 
 const DEFAULT_INTERVAL = 1000 * 60 * 5;
-const INTERVAL_STORAGE_KEY = 'tw:restore-point-interval';
+const INTERVAL_STORAGE_KEY = 'zc:restore-point-interval';
 
 const readInterval = () => {
     try {
@@ -599,7 +599,7 @@ const readInterval = () => {
         }
 
         // TODO: this is temporary, remove it after enough has passed for people that care to have migrated
-        const addonSettings = localStorage.getItem('tw:addons');
+        const addonSettings = localStorage.getItem('zc:addons');
         if (addonSettings) {
             const parsedAddonSettings = JSON.parse(addonSettings);
             const addonObject = parsedAddonSettings['tw-disable-restore-points'];

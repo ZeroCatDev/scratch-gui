@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -36,7 +37,7 @@ const messages = defineMessages({
     }
 });
 
-const USERNAME_KEY = 'tw:username';
+const USERNAME_KEY = 'zc:username';
 
 /**
  * The State Manager is responsible for managing persistent state and the URL.
@@ -306,16 +307,16 @@ const TWStateManager = function (WrappedComponent) {
             //    this.doNotPersistUsername = username;
             //    this.props.onSetUsername(username);
             //} else {
-                const persistentUsername = this.props.isEmbedded ? null : getLocalStorage(USERNAME_KEY);
-                if (persistentUsername === null) {
-                    const randomUsername = generateRandomUsername();
-                    this.props.onSetUsername(randomUsername);
-                    if (this.props.isEmbedded) {
-                        this.doNotPersistUsername = randomUsername;
-                    }
-                } else {
-                    this.props.onSetUsername(persistentUsername);
+            const persistentUsername = this.props.isEmbedded ? null : getLocalStorage(USERNAME_KEY);
+            if (persistentUsername === null) {
+                const randomUsername = generateRandomUsername();
+                this.props.onSetUsername(randomUsername);
+                if (this.props.isEmbedded) {
+                    this.doNotPersistUsername = randomUsername;
                 }
+            } else {
+                this.props.onSetUsername(persistentUsername);
+            }
             //}
 
             if (urlParams.has('hqpen')) {
