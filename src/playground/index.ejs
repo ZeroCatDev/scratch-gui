@@ -244,8 +244,7 @@
     <mdui-text-field label="昵称" id="nickname-text"></mdui-text-field>
     <mdui-text-field label="用户ID" id="userid-text"></mdui-text-field>
 
-    <mdui-button
-      onclick="localStorage.removeItem('token');
+    <mdui-button onclick="localStorage.removeItem('token');
       localStorage.removeItem('zc:username');
       localStorage.removeItem('zc:id');
       localStorage.setItem('toekn', document.querySelector('#toekn-text').value);
@@ -256,6 +255,8 @@
 
 
   </mdui-dialog>
+  <script src="https://zerocat-static.houlangs.com/staticfile/js/jwt-decode.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
   <script>
     window.apiHost = "<%= process.env.APIHOST %>";
     window.assetHost = "<%= process.env.ASSETSHOST %>";
@@ -277,9 +278,26 @@
     var projectinfo = {};
     window.projectinfo = projectinfo;
 
+    function getQueryString(name) {
+      const url_string = window.location.href;
+      const url = new URL(url_string);
+      return url.searchParams.get(name);
+    }
+
     window.onload = function () {
-      load();
+      if (getQueryString('msg')) {
+        if (getQueryString('msg') == '404') {
+          debugger
+          alert("作品不存在");
+        }
+        if (getQueryString('msg') == '401') {
+          alert("请先登录");
+        }
+      }
+
       _pid = 0;
+      load();
+
       zctab = document.querySelector("#zerocat-tab");
       openzctabButton = document.querySelector("#open-zerocat-tab");
       openzctabButton.addEventListener(
@@ -304,7 +322,17 @@
       setinfotab.open = true;
     }
     window.setinfotabopen = setinfotabopen;
+    function loaduserinfo() {
+      if (localStorage.getItem("token")) {
+        const decoded = jwtDecode(localStorage.getItem("token"));
+        console.log(decoded);
+      }
+    }
     function load() {
+
+
+
+
       console.log("加载");
       if (window.location.hash) {
         _pid = window.location.hash.match(/\d+/i)[0];
@@ -320,7 +348,6 @@
     }
     window.scratchConfig = {
       handleProjectLoaded: () => {
-        load();
         console.log("作品ID为" + _pid);
         if (_pid !== 0) {
           console.log("加载作品信息");
@@ -417,35 +444,41 @@
     }
 
     function getprojectinfo() {
-      $.ajax({
-        url: window.apiHost + "/scratch/projectinfo?id=" + _pid,
-        type: "GET",
-        data: { token: localStorage.getItem("token") },
-        success: function (result) {
-          window.projectinfo = result;
-          zctab.headline = result.title;
-          zctab.description = `用户ID：${result.authorid
-            }，作品ID：${result.id} ，${result.authorid == localStorage.getItem("zc:id")
-              ? "是你的作品"
-              : "不是你的作品"
-            }`;
+      if (_pid !== 0) {
+        $.ajax({
+          url: window.apiHost + "/scratch/projectinfo?id=" + _pid,
+          type: "GET",
+          data: { token: localStorage.getItem("token") },
+          success: function (result) {
+            if (result.status == '404') {
+              location.href = "/editor.html?msg=404"
+              return;
+            }
+            window.projectinfo = result;
+            zctab.headline = result.title;
+            zctab.description = `用户ID：${result.authorid
+              }，作品ID：${result.id} ，${result.authorid == localStorage.getItem("zc:id")
+                ? "是你的作品"
+                : "不是你的作品"
+              }`;
 
-          console.log("成功获取作品信息");
-          console.log(result);
+            console.log("成功获取作品信息");
+            console.log(result);
 
-          if (result.authorid === localStorage.getItem("zc:id")) {
-            console.log("作品作者为当前用户");
-            setSaveButton();
-          }
-          if (result.authorid != localStorage.getItem("zc:id")) {
-            console.log("作品作者不是当前用户");
-            setForkButton();
-          }
-        },
-        error: function (err) {
-          automsg(err);
-        },
-      });
+            if (result.authorid === localStorage.getItem("zc:id")) {
+              console.log("作品作者为当前用户");
+              setSaveButton();
+            }
+            if (result.authorid != localStorage.getItem("zc:id")) {
+              console.log("作品作者不是当前用户");
+              setForkButton();
+            }
+          },
+          error: function (err) {
+            alert(err);
+          },
+        });
+      }
     }
     function setSaveButton() {
       document.getElementById("push-button").innerText = "保存";
