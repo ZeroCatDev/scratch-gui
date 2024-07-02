@@ -235,21 +235,17 @@
   <mdui-dialog headline="作品" description="加载中" close-on-overlay-click id="zerocat-tab">
     <mdui-button id="savestatic" onclick="uploadAssets()">保存媒体库</mdui-button>
     <mdui-button onclick="logText.innerText = ''">清空log</mdui-button>
+    <mdui-button onclick="projectjson='null';pushproject()">强制保存作品</mdui-button>
+
 
     <div id="log-text"></div>
   </mdui-dialog>
   <mdui-dialog headline="设置" description="设置账户凭据" close-on-overlay-click id="setinfo-tab">
 
-    <mdui-text-field label="toekn" id="toekn-text"></mdui-text-field>
-    <mdui-text-field label="昵称" id="nickname-text"></mdui-text-field>
-    <mdui-text-field label="用户ID" id="userid-text"></mdui-text-field>
+    <mdui-text-field label="token" id="token-text"></mdui-text-field>
 
     <mdui-button onclick="localStorage.removeItem('token');
-      localStorage.removeItem('zc:username');
-      localStorage.removeItem('zc:id');
-      localStorage.setItem('toekn', document.querySelector('#toekn-text').value);
-      localStorage.setItem('zc:username', document.querySelector('#nickname-text').value);
-      localStorage.setItem('zc:id', document.querySelector('#userid-text').value);
+      localStorage.setItem('token', document.querySelector('#token-text').value);loaduserinfo()
       ">保存</mdui-button>
 
 
@@ -274,7 +270,7 @@
     var opensetinfotabButton = {};
 
     var pushbutton = {};
-    var projectjson = {};
+    var projectjson = 'null';
     var projectinfo = {};
     window.projectinfo = projectinfo;
 
@@ -294,7 +290,11 @@
           alert("请先登录");
         }
       }
+      if (getQueryString('token')) {
+        localStorage.removeItem('token');
+        localStorage.setItem('token', getQueryString('token'));
 
+      }
       _pid = 0;
       load();
 
@@ -326,16 +326,20 @@
       if (localStorage.getItem("token")) {
         const decoded = jwtDecode(localStorage.getItem("token"));
         console.log(decoded);
+        localStorage.setItem("zc:id", decoded.userid);
+        localStorage.setItem("zc:username", decoded.display_name);
+      } else {
+        console.log("无令牌");
       }
     }
     function load() {
 
 
-
+      loaduserinfo()
 
       console.log("加载");
       if (window.location.hash) {
-        _pid = window.location.hash.match(/\d+/i)[0];
+        _pid = Number(location.hash.match(/\d+/i)[0]);
       }
       console.log("作品ID为" + _pid);
       if (_pid !== 0) {
@@ -423,17 +427,19 @@
       });
     }
     function uploadProject() {
+console.log(window.apiHost +"/scratch/projects/" + (_pid === 0 ?  '': projectinfo.id) + "?token=" +localStorage.getItem("token"));
+
       $.ajax({
-        url:
-          window.apiHost +
-          "/scratch/projects/" +
-          projectinfo.id +
-          "?token=" +
-          localStorage.getItem("token"),
-        type: "PUT",
+        url: window.apiHost +"/scratch/projects/" +( _pid === 0 ?  '': projectinfo.id) + "?token=" +localStorage.getItem("token"),
+        type: _pid === 0 ? 'post' : 'put',
         data: vm.toJSON(),
         contentType: "application/json",
         success: function (result) {
+          if(_pid === 0){
+            console.log("作品创建成功");
+
+            location.href = "/editor.html#" + result.id;
+          }
           console.log("作品保存成功");
           console.log(result);
         },
@@ -444,7 +450,7 @@
     }
 
     function getprojectinfo() {
-      if (_pid !== 0) {
+      if (_pid !== 0 && Number.isInteger(_pid)) {
         $.ajax({
           url: window.apiHost + "/scratch/projectinfo?id=" + _pid,
           type: "GET",
@@ -497,11 +503,11 @@
 
     function pushproject() {
       uploadAssets();
-      if (!projectjson || projectjson != vm.toJSON()) {
+      if (projectjson=='null' || projectjson != vm.toJSON()) {
         projectjson = vm.toJSON();
         if (
           window.projectinfo.authorid ==
-          localStorage.getItem("zc:id")
+          localStorage.getItem("zc:id") || _pid == 0
         ) {
           uploadProject();
           console.log("保存完成");
