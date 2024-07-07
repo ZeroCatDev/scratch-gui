@@ -241,19 +241,19 @@
     <div id="log-text"></div>
   </mdui-dialog>
   <mdui-dialog headline="设置" description="设置账户凭据" close-on-overlay-click id="setinfo-tab">
-    <mdui-button onclick="window.open(window.apihost+'/user/login?redirect=editor')
-    ">ZeroCat授权</mdui-button>
+    <div id="userinfotext"></div>
+
     <mdui-text-field label="token" id="token-text"></mdui-text-field>
 
     <mdui-button onclick="localStorage.removeItem('token');
       localStorage.setItem('token', document.querySelector('#token-text').value);loaduserinfo()
-      ">保存</mdui-button>
+      ">保存</mdui-button> <mdui-button onclick="window.open(window.apihost+'/user/login?redirect=editor')
+      ">ZeroCat一键授权</mdui-button>
 
 
 
   </mdui-dialog>
-  <script src="https://zerocat-static.houlangs.com/staticfile/js/jwt-decode.js" crossorigin="anonymous"
-    referrerpolicy="no-referrer"></script>
+  <script src="/jwt-decode.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     window.apiHost = "<%= process.env.APIHOST %>";
     window.assetHost = "<%= process.env.ASSETSHOST %>";
@@ -267,6 +267,7 @@
     var zctab = {};
     var openzctabButton = {};
     var setinfotab = {};
+    var userinfo = {};
 
     var opensetinfotabButton = {};
 
@@ -296,6 +297,9 @@
         localStorage.removeItem('token');
         localStorage.setItem('token', getQueryString('token'));
 
+
+
+        window.location.href = removeQuery(window.location.href, 'token');
       }
       _pid = 0;
       load();
@@ -316,6 +320,11 @@
       logText = document.querySelector("#log-text");
       pushbutton = document.querySelector("#push-button");
     };
+    function removeQuery(url, query) {
+      const urlObj = new URL(url);
+      urlObj.searchParams.delete(query);
+      return urlObj.toString();
+    }
     function zctabopen() {
       zctab.open = true;
     }
@@ -328,8 +337,12 @@
       if (localStorage.getItem("token")) {
         const decoded = jwtDecode(localStorage.getItem("token"));
         console.log(decoded);
+        userinfo = decoded;
         localStorage.setItem("zc:id", decoded.userid);
         localStorage.setItem("zc:username", decoded.display_name);
+        document.querySelector('#userinfotext').innerText = `已登录,id:${decoded.userid},用户名:${decoded.display_name}`;
+        document.querySelector('#open-setinfo-tab').innerText = userinfo.display_name;
+        console.log('加载了用户信息')
       } else {
         console.log("无令牌");
       }
@@ -429,15 +442,15 @@
       });
     }
     function uploadProject() {
-console.log(window.apiHost +"/scratch/projects/" + (_pid === 0 ?  '': projectinfo.id) + "?token=" +localStorage.getItem("token"));
+      console.log(window.apiHost + "/scratch/projects/" + (_pid === 0 ? '' : projectinfo.id) + "?token=" + localStorage.getItem("token"));
 
       $.ajax({
-        url: window.apiHost +"/scratch/projects/" +( _pid === 0 ?  '': projectinfo.id) + "?token=" +localStorage.getItem("token"),
+        url: window.apiHost + "/scratch/projects/" + (_pid === 0 ? '' : projectinfo.id) + "?token=" + localStorage.getItem("token"),
         type: _pid === 0 ? 'post' : 'put',
         data: vm.toJSON(),
         contentType: "application/json",
         success: function (result) {
-          if(_pid === 0){
+          if (_pid === 0) {
             console.log("作品创建成功");
 
             location.href = "/editor.html#" + result.id;
@@ -505,7 +518,7 @@ console.log(window.apiHost +"/scratch/projects/" + (_pid === 0 ?  '': projectinf
 
     function pushproject() {
       uploadAssets();
-      if (projectjson=='null' || projectjson != vm.toJSON()) {
+      if (projectjson == 'null' || projectjson != vm.toJSON()) {
         projectjson = vm.toJSON();
         if (
           window.projectinfo.authorid ==
