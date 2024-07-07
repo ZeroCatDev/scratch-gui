@@ -62,6 +62,8 @@ jobs:
         FOLDER: build
         # 保存在secrets里面生成的ssh私钥
         SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+        KNOWN_HOSTS_FILE: known_hosts # Path relative to the root of the repository
+
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
