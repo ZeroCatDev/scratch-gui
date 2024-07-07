@@ -30,17 +30,15 @@ export default function (projectId, vmState, params) {
     if (Object.prototype.hasOwnProperty.call(params, 'isCopy')) queryParams.is_copy = params.isCopy;
     if (Object.prototype.hasOwnProperty.call(params, 'isRemix')) queryParams.is_remix = params.isRemix;
     if (Object.prototype.hasOwnProperty.call(params, 'title')) queryParams.title = params.title;
-    let qs = queryString.stringify(queryParams);
-    if (qs) qs = `?${qs}&token=${localStorage.getItem('token')}`;
     if (creatingProject) {
         Object.assign(opts, {
             method: 'post',
-            url: `${process.env.APIHOST}/scratch/projects/${qs}`
+            url: `${process.env.APIHOST}/scratch/projects?&token=${localStorage.getItem('token')}`
         });
     } else {
         Object.assign(opts, {
             method: 'put',
-            url: `${process.env.APIHOST}/scratch/projects/${projectId}${qs}`
+            url: `${process.env.APIHOST}/scratch/projects/${projectId}?&token=${localStorage.getItem('token')}`
         });
     }
     return new Promise((resolve, reject) => {

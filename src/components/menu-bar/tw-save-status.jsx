@@ -11,14 +11,15 @@ import styles from './save-status.css';
 const TWSaveStatus = ({
     alertsList,
     fileHandle,
-    projectChanged
+    projectChanged,
+    onSaveNow
 }) => (
     filterInlineAlerts(alertsList).length > 0 ? (
         <InlineMessages />
     ) : projectChanged && (
-        <SB3Downloader>{(_className, _downloadProjectCallback, {smartSave}) => (
+        <SB3Downloader>{() => (
             <div
-                onClick={smartSave}
+                onClick={onSaveNow}
                 className={styles.saveNow}
             >
                 {fileHandle ? (
@@ -46,7 +47,9 @@ TWSaveStatus.propTypes = {
     fileHandle: PropTypes.shape({
         name: PropTypes.string
     }),
-    projectChanged: PropTypes.bool
+    projectChanged: PropTypes.bool,
+    onSaveNow: PropTypes.func
+
 };
 
 const mapStateToProps = state => ({

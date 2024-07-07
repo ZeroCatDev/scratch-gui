@@ -1029,7 +1029,7 @@ class MenuBar extends React.Component {
                 </div>
 
                 <div className={styles.accountInfoGroup}>
-                    <TWSaveStatus />
+                    <TWSaveStatus onSaveNow={this.handleClickSave} />
                 </div>
 
                 {aboutButton}
