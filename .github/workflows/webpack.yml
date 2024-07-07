@@ -59,7 +59,7 @@ jobs:
         # 目标分支
         BRANCH: main
         # 要推送的目录
-        FOLDER: dist
+        FOLDER: build
         # 保存在secrets里面生成的ssh私钥
         SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
     - name: Deploy to GitHub Pages
