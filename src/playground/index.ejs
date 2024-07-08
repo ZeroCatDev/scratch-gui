@@ -253,6 +253,21 @@
 
 
   </mdui-dialog>
+  <mdui-dialog close-on-overlay-click id="fork-dialog">
+
+  <span slot="headline">改编此作品</span>
+  <span slot="description">你真的确定要改编这个作品吗？<br/>
+    改编设立的目的是为了让社区中的作品得到更好的发展，请不要滥用改编，更不要直接抄袭<br/>
+    如果您已了解以上内容，请在下方的输入框中输入<br/>
+    <strong draggable="false" style="user-select: none;">我保证会好好对待改编的作品</strong>
+  </span>
+    <mdui-text-field  id="suretoforktext"></mdui-text-field>
+
+    <mdui-button onclick="if(document.querySelector('#suretoforktext').value=='我保证会好好对待改编的作品'){forkproject();forkdialog.open=false}else{alert('请输入正确的内容')}">改编</mdui-button>
+
+
+
+  </mdui-dialog>
   <script src="/jwt-decode.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     window.apiHost = "<%= process.env.APIHOST %>";
@@ -267,6 +282,9 @@
     var zctab = {};
     var openzctabButton = {};
     var setinfotab = {};
+    var forkdialog = {};
+    var openforkdialog = {};
+
     var userinfo = {};
 
     var opensetinfotabButton = {};
@@ -310,6 +328,8 @@
         "click",
         () => (zctab.open = true)
       );
+      forkdialog = document.querySelector("#fork-dialog");
+
 
       setinfotab = document.querySelector("#setinfo-tab");
       opensetinfotabButton = document.querySelector("#open-setinfo-tab");
@@ -327,6 +347,10 @@
     }
     function zctabopen() {
       zctab.open = true;
+    }
+    window.zctabopen = zctabopen;
+    function forkdialogopen() {
+      forkdialog.open = true;
     }
     window.zctabopen = zctabopen;
     function setinfotabopen() {
@@ -515,7 +539,7 @@
 
       document.getElementById("push-button").innerText = "改编";
       document.getElementById("push-button").onclick = function () {
-        forkproject();
+        forkdialogopen();
       };
       console.log("设置改编按钮");
     }
@@ -565,6 +589,7 @@
             console.log("上传作品成功");
             console.log(result);
             location.href = "/editor.html#" + result.id;
+            location.reload()
           },
           error: function (err) {
             console.log(err);

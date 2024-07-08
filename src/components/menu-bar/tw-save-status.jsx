@@ -35,7 +35,7 @@ const TWSaveStatus = ({
                     <FormattedMessage
                         defaultMessage="Save to your computer"
                         description="Menu bar item for downloading a project to your computer"
-                        id="gui.menuBar.downloadToComputer"
+                        id="tw.menuBar.saveNow"
                     />
                 )}
             </div>
