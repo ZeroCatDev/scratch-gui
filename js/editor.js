@@ -204,7 +204,7 @@ var GUI =
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// on error function for async loading
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
@@ -28322,7 +28322,7 @@ const fetchLibrary = async () => {
     }),
     docsURI: extension.docs ? "https://zerocatdev.github.io/extensions/".concat(extension.slug) : null,
     samples: extension.samples ? extension.samples.map(sample => ({
-      href: "".concat("", "editor?project_url=https://zerocatdev.github.io/extensions/samples/").concat(encodeURIComponent(sample), ".sb3"),
+      href: "".concat("./", "editor?project_url=https://zerocatdev.github.io/extensions/samples/").concat(encodeURIComponent(sample), ".sb3"),
       text: sample
     })) : null,
     incompatibleWithScratch: true,
@@ -46977,7 +46977,7 @@ const getCanonicalLinkElement = () => {
 class WildcardRouter extends Router {
   constructor(callbacks) {
     super(callbacks);
-    this.root = "";
+    this.root = "./";
   }
   onhashchange() {
     const hashProjectId = readHashProjectId();
@@ -47071,7 +47071,9 @@ const createRouter = (style, callbacks) => {
   }
 
   // WildcardRouter is not supported if ROOT is not set.
-  if (false) {}
+  if (true) {
+    supportedStyles.push('wildcard');
+  }
   if (!supportedStyles.includes(style)) {
     _log__WEBPACK_IMPORTED_MODULE_5__["default"].warn("routing style is unknown or not supported: ".concat(style, ", falling back to hash"));
     style = 'hash';
@@ -48548,7 +48550,9 @@ const loadServiceWorker = () => {
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint-disable */
-if (false) {}
+if (true) {
+  __webpack_require__.p = "./";
+}
 
 /***/ }),
 
@@ -48576,7 +48580,7 @@ const RenderGUI = props => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___defau
   canUseCloud: true,
   hasCloudPermission: true,
   canSave: true,
-  basePath: "",
+  basePath: "./",
   enableCommunity: true
 }, props));
 //canEditTitle
@@ -48682,7 +48686,7 @@ const isInvalidEmbed = window.parent !== window;
 const handleClickAddonSettings = addonId => {
   // addonId might be a string of the addon to focus on, undefined, or an event (treat like undefined)
   const path =  false ? undefined : 'addons.html';
-  const url = "".concat("").concat(path).concat(typeof addonId === 'string' ? "#".concat(addonId) : '');
+  const url = "".concat("./").concat(path).concat(typeof addonId === 'string' ? "#".concat(addonId) : '');
   window.open(url);
 };
 const messages = Object(react_intl__WEBPACK_IMPORTED_MODULE_5__["defineMessages"])({

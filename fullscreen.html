@@ -10,12 +10,10 @@
   <title>
     ZeroCat - Run Scratch projects faster
   </title>
-  <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" href="./images/apple-touch-icon.png" />
   
-    <link rel="manifest" href="manifest.webmanifest" />
-    
-      <script src="http://localhost:5974/js/main.js"></script>
-      <script src="http://localhost:5974/js/jquery.3.7.1.js"></script>
+      <script src="./main.js"></script>
+      <script src="./jquery.3.7.1.js"></script>
       <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
       <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
 
@@ -209,7 +207,7 @@
         }
         if ('serviceWorker' in navigator) {
           setTimeout(hardRefresh, 5000);
-          navigator.serviceWorker.getRegistration("")
+          navigator.serviceWorker.getRegistration("./")
             .then(function (registration) {
               if (registration) {
                 return registration.unregister();
@@ -596,6 +594,6 @@
     }
   </script>
   <div id="app"></div>
-<script src="js/vendors~addon-settings~credits~editor~embed~fullscreen~player.js"></script><script src="js/vendors~editor~embed~fullscreen~player.js"></script><script src="js/addon-settings~addons~editor~fullscreen~player.js"></script><script src="js/addon-settings~editor~embed~fullscreen~player.js"></script><script src="js/fullscreen.js"></script></body>
+<script src="./js/vendors~addon-settings~credits~editor~embed~fullscreen~player.js"></script><script src="./js/vendors~editor~embed~fullscreen~player.js"></script><script src="./js/addon-settings~addons~editor~fullscreen~player.js"></script><script src="./js/addon-settings~editor~embed~fullscreen~player.js"></script><script src="./js/fullscreen.js"></script></body>
 
 </html>
