@@ -248,21 +248,6 @@
 
 
   </mdui-dialog>
-  <mdui-dialog close-on-overlay-click id="fork-dialog">
-
-  <span slot="headline">改编此作品</span>
-  <span slot="description">你真的确定要改编这个作品吗？<br/>
-    改编设立的目的是为了让社区中的作品得到更好的发展，请不要滥用改编，更不能直接抄袭。<br/>
-    如果您已了解以上内容，请在下方的输入框中输入<br/>
-    <strong draggable="false" style="user-select: none;">我保证会好好对待改编的作品</strong>
-  </span>
-    <mdui-text-field  id="suretoforktext"></mdui-text-field>
-
-    <mdui-button onclick="if(document.querySelector('#suretoforktext').value=='我保证会好好对待改编的作品'){forkproject();forkdialog.open=false}else{alert('请输入正确的内容')}">改编</mdui-button>
-
-
-
-  </mdui-dialog>
   <script src="./jwt-decode.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     window.apiHost = "https://zerocat.houlangs.com";
@@ -597,3 +582,18 @@
 <script src="./js/vendors~addon-settings~credits~editor~embed~fullscreen~player.js"></script><script src="./js/vendors~editor~embed~fullscreen~player.js"></script><script src="./js/addon-settings~addons~editor~fullscreen~player.js"></script><script src="./js/addon-settings~editor~embed~fullscreen~player.js"></script><script src="./js/fullscreen.js"></script></body>
 
 </html>
+<mdui-dialog close-on-overlay-click id="fork-dialog">
+
+<span slot="headline">改编此作品</span>
+<span slot="description">你真的确定要改编这个作品吗？<br/>
+  改编设立的目的是为了让社区中的作品得到更好的发展，请不要滥用改编，更不能直接抄袭。<br/>
+  如果您已了解以上内容，请在下方的输入框中输入<br/>
+  <strong draggable="false" style="user-select: none;">我保证会好好对待改编的作品</strong>
+</span>
+  <mdui-text-field  id="suretoforktext"></mdui-text-field>
+
+  <mdui-button onclick="if(document.querySelector('#suretoforktext').value=='我保证会好好对待改编的作品'){forkproject();forkdialog.open=false}else{alert('请输入正确的内容')}">改编</mdui-button>
+
+
+
+</mdui-dialog>
