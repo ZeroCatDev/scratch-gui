@@ -17,7 +17,7 @@ const postcssImport = require('postcss-import');
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const {APP_NAME} = require('./src/lib/brand');
 
-const root = process.env.ROOT || '';
+const root = process.env.ROOT || './';
 if (root.length > 0 && !root.endsWith('/')) {
     throw new Error('If ROOT is defined, it must have a trailing slash.');
 }
@@ -46,7 +46,8 @@ const base = {
                 {from: /^\/\d+\/embed\/?$/, to: '/embed.html'},
                 {from: /^\/addons\/?$/, to: '/addons.html'}
             ]
-        }
+        },
+        publicPath: '/'
     },
     output: {
         library: 'GUI',
