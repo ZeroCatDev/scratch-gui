@@ -1020,7 +1020,7 @@ class MenuBar extends React.Component {
 
                     <div className={styles.menuBarItem}>
                     <mdui-button id='open-zerocat-tab'>ZeroCat</mdui-button>
-                    <mdui-button id='open-setinfo-tab'>登录</mdui-button>
+                    <mdui-button id='open-setinfo-tab' href='/account/login' target="_blank">登录</mdui-button>
 
                     <mdui-button id='push-button'>加载中</mdui-button>
 
