@@ -266,7 +266,7 @@
         <script>
             if (localStorage.getItem("ZeroCat_Apihost")){
                 window.apiHost = localStorage.getItem("ZeroCat_Apihost");
-                window.apihost = "<%= process.env.APIHOST %>";
+                window.apihost = localStorage.getItem("ZeroCat_Apihost");
 
             }else{
                 window.apiHost = "<%= process.env.APIHOST %>";
