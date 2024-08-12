@@ -253,15 +253,20 @@
 
         <script
             src="./jwt-decode.js"
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
         ></script>
         <script>
-            window.apiHost = "https://zerocat.houlangs.com";
+            if (localStorage.getItem("apihost")){
+                window.apiHost = localStorage.getItem("apihost");
+                window.apihost = "https://zerocat.houlangs.com";
+
+            }else{
+                window.apiHost = "https://zerocat.houlangs.com";
+                window.apihost = "https://zerocat.houlangs.com";
+
+            }
             window.assetHost = "https://s4-1.wuyuan.1r.ink/material/asset";
 
-            // 论如何跳过天才群星闪耀时任务
-            window.apihost = "https://zerocat.houlangs.com";
+            // 论天才群星闪耀时
             window.assethost = "https://s4-1.wuyuan.1r.ink/material/asset";
 
             var _pid = {};
