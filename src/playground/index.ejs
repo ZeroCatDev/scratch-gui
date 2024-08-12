@@ -262,15 +262,20 @@
 
         <script
             src="./jwt-decode.js"
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
         ></script>
         <script>
-            window.apiHost = "<%= process.env.APIHOST %>";
+            if (localStorage.getItem("apihost")){
+                window.apiHost = localStorage.getItem("apihost");
+                window.apihost = "<%= process.env.APIHOST %>";
+
+            }else{
+                window.apiHost = "<%= process.env.APIHOST %>";
+                window.apihost = "<%= process.env.APIHOST %>";
+
+            }
             window.assetHost = "<%= process.env.ASSETSHOST %>";
 
-            // 论如何跳过天才群星闪耀时任务
-            window.apihost = "<%= process.env.APIHOST %>";
+            // 论天才群星闪耀时
             window.assethost = "<%= process.env.ASSETSHOST %>";
 
             var _pid = {};
