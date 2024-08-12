@@ -250,28 +250,7 @@
 
             <div id="log-text"></div>
         </mdui-dialog>
-        <mdui-dialog
-            headline="设置"
-            description="设置账户凭据"
-            close-on-overlay-click
-            id="setinfo-tab"
-        >
-            <div id="userinfotext"></div>
 
-            <mdui-text-field label="token" id="token-text"></mdui-text-field>
-
-            <mdui-button
-                onclick="localStorage.removeItem('token');
-      localStorage.setItem('token', document.querySelector('#token-text').value);loaduserinfo()
-      "
-                >保存</mdui-button
-            >
-            <mdui-button
-                onclick="window.open(window.apihost+'/user/login?redirect=editor')
-      "
-                >ZeroCat一键授权</mdui-button
-            >
-        </mdui-dialog>
         <script
             src="./jwt-decode.js"
             crossorigin="anonymous"
@@ -318,15 +297,7 @@
                         alert("请先登录");
                     }
                 }
-                if (getQueryString("token")) {
-                    localStorage.removeItem("token");
-                    localStorage.setItem("token", getQueryString("token"));
 
-                    window.location.href = removeQuery(
-                        window.location.href,
-                        "token"
-                    );
-                }
                 _pid = 0;
                 load();
 
@@ -338,13 +309,6 @@
                 );
                 forkdialog = document.querySelector("#fork-dialog");
 
-                setinfotab = document.querySelector("#setinfo-tab");
-                opensetinfotabButton =
-                    document.querySelector("#open-setinfo-tab");
-                opensetinfotabButton.addEventListener(
-                    "click",
-                    () => (setinfotab.open = true)
-                );
                 logText = document.querySelector("#log-text");
                 pushbutton = document.querySelector("#push-button");
             };
@@ -372,11 +336,9 @@
                     userinfo = decoded;
                     localStorage.setItem("zc:id", decoded.userid);
                     localStorage.setItem("zc:username", decoded.display_name);
-                    document.querySelector(
-                        "#userinfotext"
-                    ).innerText = `已登录,id:${decoded.userid},用户名:${decoded.display_name}`;
-                    document.querySelector("#open-setinfo-tab").innerText =
-                        userinfo.display_name;
+                    //document.querySelector(    "#userinfotext").innerText = `已登录,id:${decoded.userid},用户名:${decoded.display_name}`;
+                    document.querySelector("#open-setinfo-tab").innerText =userinfo.display_name;
+                    document.querySelector("#open-setinfo-tab").removeAttribute('href');
                     console.log("加载了用户信息");
                 } else {
                     console.log("无令牌");

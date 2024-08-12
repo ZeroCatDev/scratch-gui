@@ -4646,11 +4646,11 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
       const i = t.$proxies || (t.$proxies = {}),
         s = i[e];
       if (!s) return;
-      (({
+      ({
         attach: ds,
         detach: ds,
         resize: ds
-      })[e] || ss)(t, e, s), i[e] = void 0;
+      }[e] || ss)(t, e, s), i[e] = void 0;
     }
     getDevicePixelRatio() {
       return window.devicePixelRatio;

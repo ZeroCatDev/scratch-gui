@@ -6581,7 +6581,7 @@ class TokenTypeBlock extends TokenType {
      * @type {{strings: string[], inputs: [], length: number}[]}
      */
     this.stringForms = [];
-    const enumerateStringForms = function enumerateStringForms() {
+    const _enumerateStringForms = function enumerateStringForms() {
       let partIdx = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       let strings = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
       let inputs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -6593,7 +6593,7 @@ class TokenTypeBlock extends TokenType {
           strings.push(...blockPart.toLowerCase().split(" "));
         } else if (blockPart.type === _BlockTypeInfo_js__WEBPACK_IMPORTED_MODULE_0__["BlockInputType"].ENUM) {
           for (const enumValue of blockPart.values) {
-            enumerateStringForms(partIdx + 1, [...strings, ...enumValue.string.toLowerCase().split(" ")], [...inputs, enumValue], length + enumValue.string.length);
+            _enumerateStringForms(partIdx + 1, [...strings, ...enumValue.string.toLowerCase().split(" ")], [...inputs, enumValue], length + enumValue.string.length);
           }
           return;
         } else {
@@ -6606,7 +6606,7 @@ class TokenTypeBlock extends TokenType {
         length
       });
     };
-    enumerateStringForms();
+    _enumerateStringForms();
   }
 
   /**
