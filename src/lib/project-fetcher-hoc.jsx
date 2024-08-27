@@ -196,7 +196,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
     };
     ProjectFetcherComponent.defaultProps = {
         assetHost: process.env.ASSETSHOST,
-        projectHost: process.env.APIHOST + '/scratch/play/project'
+        projectHost: process.env.APIHOST + '/project'
     };
 
     const mapStateToProps = state => ({
