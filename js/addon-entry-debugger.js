@@ -4379,13 +4379,13 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
           const e = function (t) {
               const e = [];
               let i, s, n, o, a, r;
-              for (i = 0, s = (t || []).length; i < s; ++i) n = t[i], ({
+              for (i = 0, s = (t || []).length; i < s; ++i) n = t[i], {
                 position: o,
                 options: {
                   stack: a,
                   stackWeight: r = 1
                 }
-              } = n), e.push({
+              } = n, e.push({
                 index: i,
                 box: n,
                 pos: o,
@@ -12005,22 +12005,22 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
     i ? (e >= t[r].pos && e <= t[l].pos && ({
       lo: r,
       hi: l
-    } = et(t, "pos", e)), ({
+    } = et(t, "pos", e)), {
       pos: s,
       time: o
-    } = t[r]), ({
+    } = t[r], {
       pos: n,
       time: a
-    } = t[l])) : (e >= t[r].time && e <= t[l].time && ({
+    } = t[l]) : (e >= t[r].time && e <= t[l].time && ({
       lo: r,
       hi: l
-    } = et(t, "time", e)), ({
+    } = et(t, "time", e)), {
       time: s,
       pos: o
-    } = t[r]), ({
+    } = t[r], {
       time: n,
       pos: a
-    } = t[l]));
+    } = t[l]);
     const h = n - s;
     return h ? o + (a - o) * (e - s) / h : o;
   }

@@ -40175,7 +40175,7 @@ const ProjectFetcherHOC = function ProjectFetcherHOC(WrappedComponent) {
   };
   ProjectFetcherComponent.defaultProps = {
     assetHost: "https://s4-1.wuyuan.1r.ink/material/asset",
-    projectHost: "https://zerocat.houlangs.com" + '/scratch/play/project'
+    projectHost: "https://zerocat.houlangs.com" + '/project'
   };
   const mapStateToProps = state => ({
     isCreatingNew: Object(_reducers_project_state__WEBPACK_IMPORTED_MODULE_6__["getIsCreatingNew"])(state.scratchGui.projectState.loadingState),
@@ -40709,7 +40709,7 @@ __webpack_require__.r(__webpack_exports__);
   } else {
     Object.assign(opts, {
       method: 'put',
-      url: "".concat("https://zerocat.houlangs.com", "/scratch/projects/").concat(projectId, "?&token=").concat(localStorage.getItem('token'))
+      url: "".concat("https://zerocat.houlangs.com", "/project/").concat(projectId, "/source/dev?&token=").concat(localStorage.getItem('token'))
     });
   }
   return new Promise((resolve, reject) => {
@@ -41427,7 +41427,7 @@ class Storage extends _zerocat_scratch_storage__WEBPACK_IMPORTED_MODULE_0___defa
     this.projectToken = projectToken;
   }
   getProjectGetConfig(projectAsset) {
-    const path = "".concat(this.projectHost, "/").concat(projectAsset.assetId);
+    const path = "".concat(this.projectHost, "/").concat(projectAsset.assetId, "/source");
     const qs = this.projectToken ? "?token=".concat(this.projectToken) : '';
     return path + qs;
   }
