@@ -10590,13 +10590,13 @@ GUIComponent.defaultProps = {
   canChangeLanguage: true,
   canChangeTheme: true,
   canCreateNew: true,
-  canEditTitle: true,
+  canEditTitle: false,
   canManageFiles: true,
   canRemix: false,
   canSave: false,
   canCreateCopy: false,
   canShare: false,
-  canUseCloud: false,
+  canUseCloud: true,
   enableCommunity: false,
   isCreating: false,
   isShared: false,
@@ -13147,14 +13147,14 @@ class MenuBar extends react__WEBPACK_IMPORTED_MODULE_7___default.a.Component {
       className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(_menu_bar_css__WEBPACK_IMPORTED_MODULE_38___default.a.menuBarItem, _menu_bar_css__WEBPACK_IMPORTED_MODULE_38___default.a.communityButtonWrapper)
     }, this.props.enableCommunity ? (this.props.isShowingProject || this.props.isUpdating) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_containers_project_watcher_jsx__WEBPACK_IMPORTED_MODULE_16__["default"], {
       onDoneUpdating: this.props.onSeeCommunity
-    }, waitForUpdate => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_community_button_jsx__WEBPACK_IMPORTED_MODULE_11__["default"], {
-      className: _menu_bar_css__WEBPACK_IMPORTED_MODULE_38___default.a.menuBarButton
-      /* eslint-disable react/jsx-no-bind */,
-      onClick: () => {
-        this.handleClickSeeCommunity(waitForUpdate);
-      }
-      /* eslint-enable react/jsx-no-bind */
-    })) : this.props.showComingSoon ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(MenuBarItemTooltip, {
+    }, waitForUpdate => (
+    /*<CommunityButton
+        className={styles.menuBarButton}
+         onClick={() => {
+            this.handleClickSeeCommunity(waitForUpdate);
+        }}
+    />*/
+    [])) : this.props.showComingSoon ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(MenuBarItemTooltip, {
       id: "community-button"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_community_button_jsx__WEBPACK_IMPORTED_MODULE_11__["default"], {
       className: _menu_bar_css__WEBPACK_IMPORTED_MODULE_38___default.a.menuBarButton
@@ -13178,13 +13178,13 @@ class MenuBar extends react__WEBPACK_IMPORTED_MODULE_7___default.a.Component {
       }
     })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
       className: _menu_bar_css__WEBPACK_IMPORTED_MODULE_38___default.a.menuBarItem
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("mdui-button", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_button_button_jsx__WEBPACK_IMPORTED_MODULE_10__["default"], {
       id: "open-zerocat-tab"
-    }, "ZeroCat"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("mdui-button", {
+    }, "\u4FE1\u606F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_button_button_jsx__WEBPACK_IMPORTED_MODULE_10__["default"], {
       id: "open-setinfo-tab",
       href: "/account/login",
       target: "_blank"
-    }, "\u767B\u5F55"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("mdui-button", {
+    }, "\u767B\u5F55"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_button_button_jsx__WEBPACK_IMPORTED_MODULE_10__["default"], {
       id: "push-button"
     }, "\u52A0\u8F7D\u4E2D"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
       className: _menu_bar_css__WEBPACK_IMPORTED_MODULE_38___default.a.accountInfoGroup
@@ -45241,7 +45241,7 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 const fetchProjectMeta = async projectId => {
-  const urls = ["".concat("https://zerocat.houlangs.com", "/scratch/projectinfo2?id=").concat(projectId, "?token=").concat(localStorage.getItem('token'))];
+  const urls = ["".concat("https://zerocat.houlangs.com", "/scratch/projectinfo2?id=").concat(projectId, "&token=").concat(localStorage.getItem('token'))];
   let firstError;
   for (const url of urls) {
     try {
