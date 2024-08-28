@@ -229,18 +229,13 @@
 
     <mdui-dialog headline="作品" description="加载中" close-on-overlay-click id="zerocat-tab">
         <mdui-button id="savestatic" onclick="uploadAssets()">保存媒体库</mdui-button>
-        <mdui-button onclick="logText.innerText = ''">清空log</mdui-button>
         <mdui-button onclick="projectjson='null';saveproject()">强制保存作品</mdui-button>
-        <mdui-button onclick="pushproject()">推送作品</mdui-button>
+        <mdui-button onclick="logText.innerText = ''">清空log</mdui-button>
 
         <div id="log-text"></div>
     </mdui-dialog>
 
-    <mdui-dialog headline="推送作品"
-        description="如果你开启了开发环境(默认开启)，则可以在此推送此作品至生产分支，推送后其他的用户将查看最新的作品，否则只有你可以看到。推送后将为作品创建历史记录，你将可以找回你的作品。"
-        close-on-overlay-click id="push-dialog">
-        <mdui-button onclick="pushproject()" id="topushbutton">推送作品</mdui-button>
-    </mdui-dialog>
+
     <script src="./jwt-decode.js"></script>
     <script>
         if (localStorage.getItem("ZeroCat_Apihost")) {
@@ -269,8 +264,6 @@
 
         var opensetinfotabButton = {};
 
-        var pushbutton = {};
-        var topushbutton = {};
 
         var projectjson = "null";
         var projectinfo = {};
@@ -488,12 +481,8 @@
                 "click",
                 () => (zctab.open = true)
             );
-            forkdialog = document.querySelector("#fork-dialog");
-            pushdialog = document.querySelector("#push-dialog");
 
             logText = document.querySelector("#log-text");
-            pushbutton = document.querySelector("#push-button");
-            topushbutton = document.querySelector("#topushbutton");
 
         };
         function zctabopen() {
@@ -561,8 +550,7 @@
                 document.getElementById("push-button").innerText = "推送";
                 document.getElementById("push-button").onclick =
                     function () {
-                        pushdialogopen();
-                    };
+window.open('/projects/'+_pid+'/push')                    };
                 console.log("设置推送按钮");
             }
         }
@@ -570,14 +558,14 @@
             // document.getElementById("push-button").style.display = "none";
             // document.getElementById("push-button").style.removeProperty("display");
             document.getElementById("push-button").innerText = "改编";
-            document.getElementById("push-button").onclick = function () {
-                forkdialogopen();
-            };
+            document.getElementById("push-button").onclick =
+                    function () {
+window.open('/projects/'+_pid+'/fork')                    };
             console.log("设置改编按钮");
         }
 
         // 由按钮触发的函数
-        // 保存(而不是推送)作品
+        // 保存作品
         function saveproject() {
             uploadAssets();
             if (projectjson == "null" || projectjson != vm.toJSON() || _pid == 0
@@ -604,75 +592,7 @@
                 return "作品未修改";
             }
         }
-        function pushproject() {
-            if (_pid != 0 && window.projectinfo.authorid == localStorage.getItem("zc:id")) {
-                topushbutton.disabled = true
-                console.log('开始保存作品')
-                saveproject()
-                console.log('开始推送作品')
-                $.ajax({
-                    url:
-                        `${window.apiHost}/project/${projectinfo.id}/push?token=${localStorage.getItem("token")}`,
-                    type: "post",
-                    success: function (result) {
-                        console.log(result);
-                        mdui.alert({
-                            headline: "推送作品成功",
-                            description: result.message||result.msg,
-                            confirmText: "关闭",
-                        });
-                    },
-                    error: function (err) {
-                        console.log(err);
-                        mdui.alert({
-                            headline: "推送作品出错",
-                            description: err,
-                            confirmText: "关闭",
-                        });
-                    },
-                });
-                topushbutton.disabled = false
 
-            }
-
-        }
-        // 分叉作品
-        function forkproject() {
-            getprojectinfo();
-            if (
-                window.projectinfo.authorid == localStorage.getItem("zc:id")
-            ) {
-                console.log("作品作者是当前用户");
-                return "作品作者是当前用户";
-            }
-            if (!localStorage.getItem("zc:id")) {
-                console.log("你登录了吗");
-                return "你登录了吗";
-            }
-            if (
-                window.projectinfo.authorid != localStorage.getItem("zc:id")
-            ) {
-                console.log("处理改编");
-                $.ajax({
-                    url:`${window.apiHost}/project/${projectinfo.id}/fork?token=${localStorage.getItem("token")}`,
-                    type: "POST",
-                    success: function (result) {
-                        console.log("改编作品成功");
-                        console.log(result);
-                        location.href = "/editor.html#" + result.id;
-                        location.reload();
-                    },
-                    error: function (err) {
-                        console.log(err);
-                        mdui.alert({
-                            headline: "改编作品失败",
-                            description: JSON.stringify(err),
-                            confirmText: "关闭",
-                        })
-                    },
-                });
-            }
-        }
     </script>
     <div id="app"></div>
 <script src="./js/vendors~addon-settings~credits~editor~embed~fullscreen~player.js"></script><script src="./js/vendors~editor~embed~fullscreen~player.js"></script><script src="./js/addon-settings~addons~editor~fullscreen~player.js"></script><script src="./js/addon-settings~editor~embed~fullscreen~player.js"></script><script src="./js/player.js"></script></body>
