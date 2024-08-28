@@ -973,14 +973,14 @@ class MenuBar extends React.Component {
                                 <ProjectWatcher onDoneUpdating={this.props.onSeeCommunity}>
                                     {
                                         waitForUpdate => (
-                                            <CommunityButton
+                                            /*<CommunityButton
                                                 className={styles.menuBarButton}
-                                                /* eslint-disable react/jsx-no-bind */
+
                                                 onClick={() => {
                                                     this.handleClickSeeCommunity(waitForUpdate);
                                                 }}
-                                                /* eslint-enable react/jsx-no-bind */
-                                            />
+                                            />*/
+                                            []
                                         )
                                     }
                                 </ProjectWatcher>
@@ -1019,10 +1019,10 @@ class MenuBar extends React.Component {
                     </div>
 
                     <div className={styles.menuBarItem}>
-                    <mdui-button id='open-zerocat-tab'>ZeroCat</mdui-button>
-                    <mdui-button id='open-setinfo-tab' href='/account/login' target="_blank">登录</mdui-button>
+                    <Button id='open-zerocat-tab'>信息</Button>
+                    <Button id='open-setinfo-tab' href='/account/login' target="_blank">登录</Button>
 
-                    <mdui-button id='push-button'>加载中</mdui-button>
+                    <Button id='push-button'>加载中</Button>
 
 
                     </div>

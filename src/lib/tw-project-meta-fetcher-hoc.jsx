@@ -8,7 +8,7 @@ import {setAuthor, setDescription} from '../reducers/tw';
 
 export const fetchProjectMeta = async projectId => {
     const urls = [
-        `${process.env.APIHOST}/scratch/projectinfo2?id=${projectId}?token=${localStorage.getItem('token')}`];
+        `${process.env.APIHOST}/scratch/projectinfo2?id=${projectId}&token=${localStorage.getItem('token')}`];
     let firstError;
     for (const url of urls) {
         try {
