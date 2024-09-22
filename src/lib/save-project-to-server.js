@@ -38,7 +38,7 @@ export default function (projectId, vmState, params) {
     } else {
         Object.assign(opts, {
             method: 'put',
-            url: `${process.env.APIHOST}/project/${projectId}/source/dev?&token=${localStorage.getItem('token')}`
+            url: `${process.env.APIHOST}/project/${projectId}/source?&token=${localStorage.getItem('token')}`
         });
     }
     return new Promise((resolve, reject) => {

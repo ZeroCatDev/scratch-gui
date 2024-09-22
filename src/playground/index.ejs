@@ -378,7 +378,7 @@
                 });
             } else {
                 $.ajax({
-                    url: `${window.apiHost}/project/${projectinfo.id}/source/dev?token=${localStorage.getItem("token")}`,
+                    url: `${window.apiHost}/project/${projectinfo.id}/source?token=${localStorage.getItem("token")}`,
                     type: "put",
                     data: vm.toJSON(),
                     contentType: "application/json",

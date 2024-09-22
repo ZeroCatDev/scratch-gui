@@ -28,7 +28,7 @@ import {fetchProjectMeta} from './tw-project-meta-fetcher-hoc.jsx';
 
 // TW: Temporary hack for project tokens
 const fetchProjectToken = async projectId => {
-    return null;
+    //return null;
     if (projectId === '0') {
         return null;
     }
