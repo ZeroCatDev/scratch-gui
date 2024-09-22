@@ -21511,7 +21511,7 @@ class FontName extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       onFocus: this.handleFocus,
       onBlur: this.handleBlur,
       onKeyDown: this.handleKeyDown
-    })), filteredOptions.length > 0 && /*#__PURE__*/react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.createPortal( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    })), filteredOptions.length > 0 && /*#__PURE__*/react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.createPortal(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: _fonts_modal_css__WEBPACK_IMPORTED_MODULE_4___default.a.fontDropdownOuter,
       style: {
         left: "".concat(this.state.rect.left - 4, "px"),
@@ -28752,7 +28752,7 @@ GUI.defaultProps = {
   onStorageInit: storageInstance => storageInstance.addOfficialScratchWebStores(),
   onProjectLoaded: () => {},
   onUpdateProjectId: () => {},
-  onVmInit: ( /* vm */) => {}
+  onVmInit: (/* vm */) => {}
 };
 const mapStateToProps = state => {
   const loadingState = state.scratchGui.projectState.loadingState;
@@ -42390,7 +42390,7 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 // TW: Temporary hack for project tokens
 const fetchProjectToken = async projectId => {
-  return null;
+  //return null;
   if (projectId === '0') {
     return null;
   }
@@ -43077,7 +43077,7 @@ __webpack_require__.r(__webpack_exports__);
   } else {
     Object.assign(opts, {
       method: 'put',
-      url: "".concat("https://zerocat.houlangs.com", "/project/").concat(projectId, "/source/dev?&token=").concat(localStorage.getItem('token'))
+      url: "".concat("https://zerocat.houlangs.com", "/project/").concat(projectId, "/source?&token=").concat(localStorage.getItem('token'))
     });
   }
   return new Promise((resolve, reject) => {
@@ -48462,7 +48462,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-Object(_app_target__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_render_interface_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+Object(_app_target__WEBPACK_IMPORTED_MODULE_3__["default"])(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_render_interface_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 
 /***/ }),
 
