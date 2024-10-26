@@ -9,7 +9,7 @@ import {APP_NAME} from '../../lib/brand';
 const hosts = [
     {
         name: 'ZeroCat',
-        cloudHost: 'wss://zerocat.houlangs.com/clouddata',
+        cloudHost: 'wss://zerocat-api.houlangs.com/clouddata',
         provider: {
             name: 'ZeroCat',
             href: '#'
