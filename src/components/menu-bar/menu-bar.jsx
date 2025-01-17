@@ -1019,10 +1019,8 @@ class MenuBar extends React.Component {
                     </div>
 
                     <div className={styles.menuBarItem}>
-                    <Button id='open-zerocat-tab'>信息</Button>
-                    <Button id='open-setinfo-tab' href='/account/login' target="_blank">登录</Button>
+                        <Button id="zerocatool">测试</Button>
 
-                    <Button id='push-button'>加载中</Button>
 
 
                     </div>
