@@ -41441,7 +41441,7 @@ class Storage extends _zerocat_scratch_storage__WEBPACK_IMPORTED_MODULE_0___defa
     this.assetHost = assetHost;
   }
   getAssetGetConfig(asset) {
-    return "".concat(this.assetHost, "/").concat(asset.assetId, ".").concat(asset.dataFormat);
+    return "".concat(this.assetHost, "material/asset/").concat(asset.assetId, ".").concat(asset.dataFormat);
   }
   getAssetCreateConfig(asset) {
     return {
