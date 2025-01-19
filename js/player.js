@@ -11931,7 +11931,7 @@ const AuthorInfo = _ref2 => {
     props = _objectWithoutProperties(_ref2, _excluded);
   return projectId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
     className: _author_info_css__WEBPACK_IMPORTED_MODULE_5___default.a.link,
-    href: "".concat("https://zerocat-api.houlangs.com", "/scratch/play?id=").concat(projectId),
+    href: "".concat("https://zerocat.houlangs.com", "/scratch/play?id=").concat(projectId),
     target: "_blank",
     rel: "noreferrer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ActualAuthorInfo, props)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ActualAuthorInfo, props);
@@ -20669,7 +20669,7 @@ const Description = _ref => {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: _description_css__WEBPACK_IMPORTED_MODULE_3___default.a.projectLink
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "".concat("https://zerocat-api.houlangs.com", "/scratch/play?id=").concat(projectId),
+    href: "".concat("https://zerocat.houlangs.com", "/scratch/play?id=").concat(projectId),
     target: "_blank",
     rel: "noreferrer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_intl__WEBPACK_IMPORTED_MODULE_2__["FormattedMessage"], {
@@ -20891,7 +20891,7 @@ class FeaturedProjects extends react__WEBPACK_IMPORTED_MODULE_2___default.a.Comp
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("a", {
       target: "_blank",
       rel: "noopener noreferrer",
-      href: "".concat("https://zerocat-api.houlangs.com", "/scratch/#").concat(this.props.studio)
+      href: "".concat("https://zerocat.houlangs.com", "/scratch/#").concat(this.props.studio)
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_intl__WEBPACK_IMPORTED_MODULE_3__["FormattedMessage"], {
       defaultMessage: "View studio on Scratch.",
       id: "tw.featuredProjectsStudio"
@@ -22331,7 +22331,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const PROJECT_BASE = "https://zerocat-api.houlangs.com" + '/scratch/play?id=';
+const PROJECT_BASE = "https://zerocat.houlangs.com" + '/scratch/play?id=';
 const messages = Object(react_intl__WEBPACK_IMPORTED_MODULE_5__["defineMessages"])({
   tooltip: {
     "id": "tw.input.tooltip",
@@ -24461,7 +24461,7 @@ StudioView.prototype.getURL = function () {
 StudioView.prototype.onselect = function (id, el) {};
 StudioView.prototype.onpageload = function () {};
 StudioView.prototype.onend = function () {};
-StudioView.STUDIO_API = "https://zerocat-api.houlangs.com" + '/scratch/view/getScratchProjects?curr=1&limit=$offset&type=new';
+StudioView.STUDIO_API = "https://zerocat.houlangs.com" + '/scratch/view/getScratchProjects?curr=1&limit=$offset&type=new';
 
 // The URL to download thumbnails from.
 // $id is replaced with the project's ID.
@@ -24469,11 +24469,11 @@ StudioView.THUMBNAIL_SRC = 'https://s4-1.wuyuan.1r.ink/scratch_slt/$id';
 
 // The URL for project pages.
 // $id is replaced with the project ID.
-StudioView.PROJECT_PAGE = "https://zerocat-api.houlangs.com" + '/scratch/play?id=$id';
+StudioView.PROJECT_PAGE = "https://zerocat.houlangs.com" + '/scratch/play?id=$id';
 
 // The URL for studio pages.
 // $id is replaced with the studio ID.
-StudioView.STUDIO_PAGE = "https://zerocat-api.houlangs.com" + '/scratch/$id';
+StudioView.STUDIO_PAGE = "https://zerocat.houlangs.com" + '/scratch/$id';
 
 // The amount of "placeholders" to insert before the next page loads.
 StudioView.PLACEHOLDER_COUNT = 9;
@@ -42536,8 +42536,8 @@ const ProjectFetcherHOC = function ProjectFetcherHOC(WrappedComponent) {
     vm: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.instanceOf(scratch_vm__WEBPACK_IMPORTED_MODULE_10___default.a)
   };
   ProjectFetcherComponent.defaultProps = {
-    assetHost: "https://s4-1.wuyuan.1r.ink/material/asset",
-    projectHost: "https://zerocat-api.houlangs.com"
+    assetHost: "https://s4-1.wuyuan.1r.ink/",
+    projectHost: "https://zerocat.houlangs.com"
   };
   const mapStateToProps = state => ({
     isCreatingNew: Object(_reducers_project_state__WEBPACK_IMPORTED_MODULE_6__["getIsCreatingNew"])(state.scratchGui.projectState.loadingState),
@@ -43066,12 +43066,12 @@ __webpack_require__.r(__webpack_exports__);
   if (creatingProject) {
     Object.assign(opts, {
       method: 'post',
-      url: "".concat("https://zerocat-api.houlangs.com", "/scratch/projects?&token=").concat(localStorage.getItem('token'))
+      url: "".concat("https://zerocat.houlangs.com", "/scratch/projects?&token=").concat(localStorage.getItem('token'))
     });
   } else {
     Object.assign(opts, {
       method: 'put',
-      url: "".concat("https://zerocat-api.houlangs.com", "/project/").concat(projectId, "/source?&token=").concat(localStorage.getItem('token'))
+      url: "".concat("https://zerocat.houlangs.com", "/project/").concat(projectId, "/source?&token=").concat(localStorage.getItem('token'))
     });
   }
   return new Promise((resolve, reject) => {
@@ -45235,7 +45235,7 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 const fetchProjectMeta = async projectId => {
-  const urls = ["".concat("https://zerocat-api.houlangs.com", "/scratch/projectinfo2?id=").concat(projectId, "&token=").concat(localStorage.getItem('token'))];
+  const urls = ["".concat("https://zerocat.houlangs.com", "/scratch/projectinfo2?id=").concat(projectId, "&token=").concat(localStorage.getItem('token'))];
   let firstError;
   for (const url of urls) {
     try {
@@ -45291,7 +45291,7 @@ const TWProjectMetaFetcherHOC = function TWProjectMetaFetcherHOC(WrappedComponen
               this.props.onSetProjectTitle(title);
             }
             const authorName = data.author.username;
-            const authorThumbnail = "".concat("https://zerocat-api.houlangs.com", "/api/usertx?id=").concat(data.author.id);
+            const authorThumbnail = "".concat("https://zerocat.houlangs.com", "/api/usertx?id=").concat(data.author.id);
             this.props.onSetAuthor(authorName, authorThumbnail);
             const instructions = data.instructions || '';
             const credits = data.description || '';
