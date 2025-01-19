@@ -74,7 +74,7 @@ class FeaturedProjects extends React.Component {
                     <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={`${ process.env.APIHOST}/scratch/#${this.props.studio}`}
+                        href={`${ process.env.ZCAPIHOST}/scratch/#${this.props.studio}`}
                     >
                         <FormattedMessage
                             defaultMessage="View studio on Scratch."

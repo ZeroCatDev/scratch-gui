@@ -181,8 +181,8 @@ module.exports = [
         plugins: base.plugins.concat([
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
-                'process.env.APIHOST': `"${process.env.APIHOST}"`,
-                'process.env.ASSETSHOST': `"${process.env.ASSETSHOST}"`,
+                'process.env.ZCAPIHOST': `"${process.env.ZCAPIHOST}"`,
+                'process.env.ZCASSETHOST': `"${process.env.ZCASSETHOST}"`,
                 'process.env.DEBUG': Boolean(process.env.DEBUG),
                 'process.env.ENABLE_SERVICE_WORKER': JSON.stringify(process.env.ENABLE_SERVICE_WORKER || ''),
                 'process.env.ROOT': JSON.stringify(root),

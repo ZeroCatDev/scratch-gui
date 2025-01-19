@@ -29,8 +29,8 @@ jobs:
 
     - name: Build
       env:
-        APIHOST: ${{ vars.APIHOST }}
-        ASSETSHOST: ${{ vars.ASSETSHOST }}
+        ZCAPIHOST: ${{ vars.ZCAPIHOST }}
+        ZCASSETHOST: ${{ vars.ZCASSETHOST }}
       run: |
         npm install
         npm run build

@@ -33,12 +33,12 @@ export default function (projectId, vmState, params) {
     if (creatingProject) {
         Object.assign(opts, {
             method: 'post',
-            url: `${process.env.APIHOST}/scratch/projects?&token=${localStorage.getItem('token')}`
+            url: `${process.env.ZCAPIHOST}/scratch/projects?&token=${localStorage.getItem('token')}`
         });
     } else {
         Object.assign(opts, {
             method: 'put',
-            url: `${process.env.APIHOST}/project/${projectId}/source?&token=${localStorage.getItem('token')}`
+            url: `${process.env.ZCAPIHOST}/project/${projectId}/source?&token=${localStorage.getItem('token')}`
         });
     }
     return new Promise((resolve, reject) => {

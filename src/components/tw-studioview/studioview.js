@@ -298,7 +298,7 @@ StudioView.prototype.onselect = function (id, el) { };
 StudioView.prototype.onpageload = function () { };
 StudioView.prototype.onend = function () { };
 
-StudioView.STUDIO_API = process.env.APIHOST+'/scratch/view/getScratchProjects?curr=1&limit=$offset&type=new';
+StudioView.STUDIO_API = process.env.ZCAPIHOST+'/scratch/view/getScratchProjects?curr=1&limit=$offset&type=new';
 
 // The URL to download thumbnails from.
 // $id is replaced with the project's ID.
@@ -306,11 +306,11 @@ StudioView.THUMBNAIL_SRC = 'https://s4-1.wuyuan.1r.ink/scratch_slt/$id';
 
 // The URL for project pages.
 // $id is replaced with the project ID.
-StudioView.PROJECT_PAGE = process.env.APIHOST+'/scratch/play?id=$id';
+StudioView.PROJECT_PAGE = process.env.ZCAPIHOST+'/scratch/play?id=$id';
 
 // The URL for studio pages.
 // $id is replaced with the studio ID.
-StudioView.STUDIO_PAGE = process.env.APIHOST+'/scratch/$id';
+StudioView.STUDIO_PAGE = process.env.ZCAPIHOST+'/scratch/$id';
 
 // The amount of "placeholders" to insert before the next page loads.
 StudioView.PLACEHOLDER_COUNT = 9;

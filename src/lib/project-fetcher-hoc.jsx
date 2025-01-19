@@ -195,8 +195,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         vm: PropTypes.instanceOf(VM)
     };
     ProjectFetcherComponent.defaultProps = {
-        assetHost: process.env.ASSETSHOST,
-        projectHost: process.env.APIHOST
+        assetHost: process.env.ZCASSETHOST,
+        projectHost: process.env.ZCAPIHOST
     };
 
     const mapStateToProps = state => ({

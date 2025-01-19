@@ -8,7 +8,7 @@ import {defaultProjectId} from '../../reducers/project-state';
 import styles from './project-input.css';
 import {setProjectId} from '../../lib/tw-navigation-utils';
 
-const PROJECT_BASE = process.env.APIHOST+'/scratch/play?id=';
+const PROJECT_BASE = process.env.ZCAPIHOST+'/scratch/play?id=';
 
 const messages = defineMessages({
     tooltip: {
