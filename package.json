@@ -24,7 +24,8 @@
     "test:lint": "eslint . --ext .js,.jsx",
     "test:unit": "jest test[\\\\/]unit[\\\\/]addons",
     "test:smoke": "jest --runInBand test[\\\\/]smoke",
-    "watch": "webpack --colors --watch"
+    "watch": "webpack --colors --watch",
+    "dev": "export ZCAPIHOST='http://localhost:3000' && export ZCASSETHOST='https://s4-1.wuyuan.1r.ink/' && npm run start"
   },
   "config": {
     "commitizen": {
