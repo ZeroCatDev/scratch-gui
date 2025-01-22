@@ -1019,7 +1019,7 @@ class MenuBar extends React.Component {
                     </div>
 
                     <div className={styles.menuBarItem}>
-                        <Button id="zerocattool">测试</Button>
+                        <Button id="zerocattool" onClick={() => window.renderButtons?.()}>加载ZeroCat工具</Button>
                     </div>
                 </div>
 
