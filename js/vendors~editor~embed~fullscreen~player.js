@@ -19160,6 +19160,19 @@ const fixJSON = (data, options = {}) => {
       throw new Error('native type is not a number');
     }
     switch (type) {
+      // Color: [9, hex color]
+      case 9: {
+        if (native.length !== 2) {
+          throw new Error(`Color native is of unexpected length: ${native.length}`);
+        }
+        const color = native[1];
+        if (typeof color !== 'string' || !/^#[a-f0-9]{6}$/i.test(color)) {
+          log('color native had invalid value');
+          native[1] = '#000000';
+        }
+        break;
+      }
+
       // Variable: [12, variable name, variable id, x?, y?]
       // List: [13, list name, list id, x?, y?]
       // x and y only present if the native is a top-level block
@@ -19370,6 +19383,20 @@ const fixJSON = (data, options = {}) => {
     if (!target.isStage && !ROTATION_STYLES.includes(target.rotationStyle)) {
       log(`sprite had invalid rotation style ${target.rotationStyle}`);
       target.rotationStyle = 'all around';
+    }
+
+    if (!target.isStage) {
+      const x = target.x;
+      if (typeof x !== 'number') {
+        log(`target x was ${typeof x}: ${x}`);
+        target.x = +x || 0;
+      }
+  
+      const y = target.y;
+      if (typeof y !== 'number') {
+        log(`target y was ${typeof y}: ${y}`);
+        target.y = +y || 0;
+      }
     }
   };
 
@@ -74902,6 +74929,7 @@ var
     SCOPE_SUPER = 64,
     SCOPE_DIRECT_SUPER = 128,
     SCOPE_CLASS_STATIC_BLOCK = 256,
+    SCOPE_CLASS_FIELD_INIT = 512,
     SCOPE_VAR = SCOPE_TOP | SCOPE_FUNCTION | SCOPE_CLASS_STATIC_BLOCK;
 
 function functionFlags(async, generator) {
@@ -75012,15 +75040,16 @@ Parser.prototype.parse = function parse () {
 
 prototypeAccessors.inFunction.get = function () { return (this.currentVarScope().flags & SCOPE_FUNCTION) > 0 };
 
-prototypeAccessors.inGenerator.get = function () { return (this.currentVarScope().flags & SCOPE_GENERATOR) > 0 && !this.currentVarScope().inClassFieldInit };
+prototypeAccessors.inGenerator.get = function () { return (this.currentVarScope().flags & SCOPE_GENERATOR) > 0 };
 
-prototypeAccessors.inAsync.get = function () { return (this.currentVarScope().flags & SCOPE_ASYNC) > 0 && !this.currentVarScope().inClassFieldInit };
+prototypeAccessors.inAsync.get = function () { return (this.currentVarScope().flags & SCOPE_ASYNC) > 0 };
 
 prototypeAccessors.canAwait.get = function () {
   for (var i = this.scopeStack.length - 1; i >= 0; i--) {
-    var scope = this.scopeStack[i];
-    if (scope.inClassFieldInit || scope.flags & SCOPE_CLASS_STATIC_BLOCK) { return false }
-    if (scope.flags & SCOPE_FUNCTION) { return (scope.flags & SCOPE_ASYNC) > 0 }
+    var ref = this.scopeStack[i];
+      var flags = ref.flags;
+    if (flags & (SCOPE_CLASS_STATIC_BLOCK | SCOPE_CLASS_FIELD_INIT)) { return false }
+    if (flags & SCOPE_FUNCTION) { return (flags & SCOPE_ASYNC) > 0 }
   }
   return (this.inModule && this.options.ecmaVersion >= 13) || this.options.allowAwaitOutsideFunction
 };
@@ -75028,8 +75057,7 @@ prototypeAccessors.canAwait.get = function () {
 prototypeAccessors.allowSuper.get = function () {
   var ref = this.currentThisScope();
     var flags = ref.flags;
-    var inClassFieldInit = ref.inClassFieldInit;
-  return (flags & SCOPE_SUPER) > 0 || inClassFieldInit || this.options.allowSuperOutsideMethod
+  return (flags & SCOPE_SUPER) > 0 || this.options.allowSuperOutsideMethod
 };
 
 prototypeAccessors.allowDirectSuper.get = function () { return (this.currentThisScope().flags & SCOPE_DIRECT_SUPER) > 0 };
@@ -75037,10 +75065,13 @@ prototypeAccessors.allowDirectSuper.get = function () { return (this.currentThis
 prototypeAccessors.treatFunctionsAsVar.get = function () { return this.treatFunctionsAsVarInScope(this.currentScope()) };
 
 prototypeAccessors.allowNewDotTarget.get = function () {
-  var ref = this.currentThisScope();
-    var flags = ref.flags;
-    var inClassFieldInit = ref.inClassFieldInit;
-  return (flags & (SCOPE_FUNCTION | SCOPE_CLASS_STATIC_BLOCK)) > 0 || inClassFieldInit
+  for (var i = this.scopeStack.length - 1; i >= 0; i--) {
+    var ref = this.scopeStack[i];
+      var flags = ref.flags;
+    if (flags & (SCOPE_CLASS_STATIC_BLOCK | SCOPE_CLASS_FIELD_INIT) ||
+        ((flags & SCOPE_FUNCTION) && !(flags & SCOPE_ARROW))) { return true }
+  }
+  return false
 };
 
 prototypeAccessors.inClassStaticBlock.get = function () {
@@ -75967,11 +75998,9 @@ pp$8.parseClassField = function(field) {
 
   if (this.eat(types$1.eq)) {
     // To raise SyntaxError if 'arguments' exists in the initializer.
-    var scope = this.currentThisScope();
-    var inClassFieldInit = scope.inClassFieldInit;
-    scope.inClassFieldInit = true;
+    this.enterScope(SCOPE_CLASS_FIELD_INIT | SCOPE_SUPER);
     field.value = this.parseMaybeAssign();
-    scope.inClassFieldInit = inClassFieldInit;
+    this.exitScope();
   } else {
     field.value = null;
   }
@@ -76113,6 +76142,8 @@ pp$8.parseExport = function(node, exports) {
       { this.checkExport(exports, node.declaration.id, node.declaration.id.start); }
     node.specifiers = [];
     node.source = null;
+    if (this.options.ecmaVersion >= 16)
+      { node.attributes = []; }
   } else { // export { x, y as z } [from '...']
     node.declaration = null;
     node.specifiers = this.parseExportSpecifiers(exports);
@@ -76136,6 +76167,8 @@ pp$8.parseExport = function(node, exports) {
       }
 
       node.source = null;
+      if (this.options.ecmaVersion >= 16)
+        { node.attributes = []; }
     }
     this.semicolon();
   }
@@ -77715,9 +77748,10 @@ pp$5.parseProperty = function(isPattern, refDestructuringErrors) {
 };
 
 pp$5.parseGetterSetter = function(prop) {
-  prop.kind = prop.key.name;
+  var kind = prop.key.name;
   this.parsePropertyName(prop);
   prop.value = this.parseMethod(false);
+  prop.kind = kind;
   var paramCount = prop.kind === "get" ? 0 : 1;
   if (prop.value.params.length !== paramCount) {
     var start = prop.value.start;
@@ -77740,9 +77774,9 @@ pp$5.parsePropertyValue = function(prop, isPattern, isGenerator, isAsync, startP
     prop.kind = "init";
   } else if (this.options.ecmaVersion >= 6 && this.type === types$1.parenL) {
     if (isPattern) { this.unexpected(); }
-    prop.kind = "init";
     prop.method = true;
     prop.value = this.parseMethod(isGenerator, isAsync);
+    prop.kind = "init";
   } else if (!isPattern && !containsEsc &&
              this.options.ecmaVersion >= 5 && !prop.computed && prop.key.type === "Identifier" &&
              (prop.key.name === "get" || prop.key.name === "set") &&
@@ -77754,7 +77788,6 @@ pp$5.parsePropertyValue = function(prop, isPattern, isGenerator, isAsync, startP
     this.checkUnreserved(prop.key);
     if (prop.key.name === "await" && !this.awaitIdentPos)
       { this.awaitIdentPos = startPos; }
-    prop.kind = "init";
     if (isPattern) {
       prop.value = this.parseMaybeDefault(startPos, startLoc, this.copyNode(prop.key));
     } else if (this.type === types$1.eq && refDestructuringErrors) {
@@ -77764,6 +77797,7 @@ pp$5.parsePropertyValue = function(prop, isPattern, isGenerator, isAsync, startP
     } else {
       prop.value = this.copyNode(prop.key);
     }
+    prop.kind = "init";
     prop.shorthand = true;
   } else { this.unexpected(); }
 };
@@ -77939,7 +77973,7 @@ pp$5.checkUnreserved = function(ref) {
     { this.raiseRecoverable(start, "Cannot use 'yield' as identifier inside a generator"); }
   if (this.inAsync && name === "await")
     { this.raiseRecoverable(start, "Cannot use 'await' as identifier inside an async function"); }
-  if (this.currentThisScope().inClassFieldInit && name === "arguments")
+  if (!(this.currentThisScope().flags & SCOPE_VAR) && name === "arguments")
     { this.raiseRecoverable(start, "Cannot use 'arguments' in class field initializer"); }
   if (this.inClassStaticBlock && (name === "arguments" || name === "await"))
     { this.raise(start, ("Cannot use " + name + " in class static initialization block")); }
@@ -78052,6 +78086,9 @@ var pp$4 = Parser.prototype;
 pp$4.raise = function(pos, message) {
   var loc = getLineInfo(this.input, pos);
   message += " (" + loc.line + ":" + loc.column + ")";
+  if (this.sourceFile) {
+    message += " in " + this.sourceFile;
+  }
   var err = new SyntaxError(message);
   err.pos = pos; err.loc = loc; err.raisedAt = this.pos;
   throw err
@@ -78075,8 +78112,6 @@ var Scope = function Scope(flags) {
   this.lexical = [];
   // A list of lexically-declared FunctionDeclaration names in the current lexical scope
   this.functions = [];
-  // A switch to disallow the identifier reference 'arguments'
-  this.inClassFieldInit = false;
 };
 
 // The functions in this module keep track of declared variables in the current scope in order to detect duplicate variable names.
@@ -78146,7 +78181,7 @@ pp$3.currentScope = function() {
 pp$3.currentVarScope = function() {
   for (var i = this.scopeStack.length - 1;; i--) {
     var scope = this.scopeStack[i];
-    if (scope.flags & SCOPE_VAR) { return scope }
+    if (scope.flags & (SCOPE_VAR | SCOPE_CLASS_FIELD_INIT | SCOPE_CLASS_STATIC_BLOCK)) { return scope }
   }
 };
 
@@ -78154,7 +78189,8 @@ pp$3.currentVarScope = function() {
 pp$3.currentThisScope = function() {
   for (var i = this.scopeStack.length - 1;; i--) {
     var scope = this.scopeStack[i];
-    if (scope.flags & SCOPE_VAR && !(scope.flags & SCOPE_ARROW)) { return scope }
+    if (scope.flags & (SCOPE_VAR | SCOPE_CLASS_FIELD_INIT | SCOPE_CLASS_STATIC_BLOCK) &&
+        !(scope.flags & SCOPE_ARROW)) { return scope }
   }
 };
 
@@ -80508,7 +80544,7 @@ pp.readWord = function() {
 // [walk]: util/walk.js
 
 
-var version = "8.14.0";
+var version = "8.14.1";
 
 Parser.acorn = {
   Parser: Parser,
@@ -87546,10 +87582,11 @@ var $indexOf = callBindBasic([GetIntrinsic('%String.prototype.indexOf%')]);
 
 /** @type {import('.')} */
 module.exports = function callBoundIntrinsic(name, allowMissing) {
-	// eslint-disable-next-line no-extra-parens
-	var intrinsic = /** @type {Parameters<typeof callBindBasic>[0][0]} */ (GetIntrinsic(name, !!allowMissing));
+	/* eslint no-extra-parens: 0 */
+
+	var intrinsic = /** @type {(this: unknown, ...args: unknown[]) => unknown} */ (GetIntrinsic(name, !!allowMissing));
 	if (typeof intrinsic === 'function' && $indexOf(name, '.prototype.') > -1) {
-		return callBindBasic([intrinsic]);
+		return callBindBasic(/** @type {const} */ ([intrinsic]));
 	}
 	return intrinsic;
 };
@@ -123326,7 +123363,7 @@ module.exports = function (headers) {
   if (!headers)
     return {}
 
-  var result = {}
+  var result = Object.create(null);
 
   var headersArr = trim(headers).split('\n')
 
