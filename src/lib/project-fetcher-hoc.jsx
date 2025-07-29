@@ -198,7 +198,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         vm: PropTypes.instanceOf(VM)
     };
     ProjectFetcherComponent.defaultProps = {
-        assetHost: 'https://assets.scratch.mit.edu',
+        assetHost: process.env.ZEROCAT_ASSETS,
         projectHost: 'https://projects.scratch.mit.edu'
     };
 

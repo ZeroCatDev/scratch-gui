@@ -340,9 +340,9 @@ class MenuBar extends React.Component {
         if (modifier) {
             if (event.key.toLowerCase() === 's') {
                 this.props.handleSaveProject();
-                event.preventDefault();    
+                event.preventDefault();
             } else if (event.key.toLowerCase() === 'o') {
-                event.preventDefault();    
+                event.preventDefault();
                 this.props.onStartSelectingFileUpload();
             }
         }
@@ -1030,6 +1030,9 @@ class MenuBar extends React.Component {
                                 />
                             </Button>
                         </a>
+                    </div>
+                    <div className={styles.menuBarItem}>
+                    <Button id="zerocattool">ZeroCat服务加载中</Button>
                     </div>
                 </div>
 

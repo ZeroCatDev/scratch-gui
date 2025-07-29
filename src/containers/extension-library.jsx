@@ -42,12 +42,52 @@ const translateGalleryItem = (extension, locale) => ({
 let cachedGallery = null;
 
 const fetchLibrary = async () => {
-    const res = await fetch('https://extensions.turbowarp.org/generated-metadata/extensions-v0.json');
+    const res = await fetch(process.env.ZEROCAT_BACKEND + '/extensions');
     if (!res.ok) {
         throw new Error(`HTTP status ${res.status}`);
     }
     const data = await res.json();
-    return data.extensions.map(extension => ({
+    const extensions = data.extensions.map(extension => ({
+        name: extension.name,
+        nameTranslations: extension.nameTranslations || {},
+        description: extension.description,
+        descriptionTranslations: extension.descriptionTranslations || {},
+        extensionId: extension.id,
+        extensionURL: `${process.env.ZEROCAT_BACKEND}/extensions/${extension.slug}.js`,
+        iconURL: extension.image,
+        tags: ['zerocat'],
+        credits: [
+            ...(extension.original || []),
+            ...(extension.by || [])
+        ].map(credit => {
+            if (credit.link) {
+                return (
+                    <a
+                        href={credit.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        key={credit.name}
+                    >
+                        {credit.name}
+                    </a>
+                );
+            }
+            return credit.name;
+        }),
+        docsURI: extension.docs ? `${process.env.ZEROCAT_BACKEND}/extensions/${extension.slug}` : null,
+        samples: extension.samples ? extension.samples.map(sample => ({
+            href: `${process.env.ROOT}editor?project_url=${process.env.ZEROCAT_BACKEND}/extensions/samples/${encodeURIComponent(sample)}.sb3`,
+            text: sample
+        })) : null,
+        incompatibleWithScratch: !extension.scratchCompatible,
+        featured: true
+    }));
+    const twRes = await fetch('https://extensions.turbowarp.org/generated-metadata/extensions-v0.json');
+    if (!twRes.ok) {
+        throw new Error(`HTTP status ${twRes.status}`);
+    }
+    const twData = await twRes.json();
+    const twExtensions = twData.extensions.map(extension => ({
         name: extension.name,
         nameTranslations: extension.nameTranslations || {},
         description: extension.description,
@@ -82,6 +122,7 @@ const fetchLibrary = async () => {
         incompatibleWithScratch: !extension.scratchCompatible,
         featured: true
     }));
+    return [...extensions, ...twExtensions];
 };
 
 class ExtensionLibrary extends React.PureComponent {

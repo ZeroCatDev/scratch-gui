@@ -179,7 +179,9 @@ module.exports = [
                 'process.env.DEBUG': Boolean(process.env.DEBUG),
                 'process.env.ENABLE_SERVICE_WORKER': JSON.stringify(process.env.ENABLE_SERVICE_WORKER || ''),
                 'process.env.ROOT': JSON.stringify(root),
-                'process.env.ROUTING_STYLE': JSON.stringify(process.env.ROUTING_STYLE || 'filehash')
+                'process.env.ROUTING_STYLE': JSON.stringify(process.env.ROUTING_STYLE || 'filehash'),
+                'process.env.ZEROCAT_BACKEND': JSON.stringify(process.env.ZEROCAT_BACKEND),
+                'process.env.ZEROCAT_ASSETS': JSON.stringify(process.env.ZEROCAT_ASSETS )
             }),
             new HtmlWebpackPlugin({
                 chunks: ['editor'],
