@@ -41746,7 +41746,7 @@ class Storage extends _turbowarp_scratch_storage__WEBPACK_IMPORTED_MODULE_0___de
     this.assetHost = assetHost;
   }
   getAssetGetConfig(asset) {
-    return "".concat(this.assetHost, "/").concat(asset.assetId, ".").concat(asset.dataFormat);
+    return "".concat(this.assetHost, "/").concat(asset.assetId.slice(0, 2), "/").concat(asset.assetId.slice(2, 4), "/").concat(asset.assetId, ".").concat(asset.dataFormat);
   }
   getAssetCreateConfig(asset) {
     return {
