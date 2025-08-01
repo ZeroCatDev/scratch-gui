@@ -139,7 +139,7 @@ class LibraryItem extends React.PureComponent {
     render () {
         const iconMd5 = this.curIconMd5();
         const iconURL = iconMd5 ?
-            `${process.env.ZEROCAT_ASSETS}/${iconMd5}` :
+            `${process.env.ZEROCAT_ASSETS}/${iconMd5.slice(0, 2)}/${iconMd5.slice(2, 4)}/${iconMd5}` :
             this.props.iconRawURL;
         return (
             <LibraryItemComponent
