@@ -41731,7 +41731,7 @@ class Storage extends _turbowarp_scratch_storage__WEBPACK_IMPORTED_MODULE_0___de
   }
   addOfficialScratchWebStores() {
     this.addWebStore([this.AssetType.Project], this.getProjectGetConfig.bind(this), this.getProjectCreateConfig.bind(this), this.getProjectUpdateConfig.bind(this));
-    this.addWebStore([this.AssetType.ImageVector, this.AssetType.ImageBitmap, this.AssetType.Sound], this.getAssetGetConfig.bind(this),
+    this.addWebStore([this.AssetType.ImageVector, this.AssetType.ImageBitmap, this.AssetType.Sound, this.AssetType.Font], this.getAssetGetConfig.bind(this),
     // We set both the create and update configs to the same method because
     // storage assumes it should update if there is an assetId, but the
     // asset store uses the assetId as part of the create URI.
