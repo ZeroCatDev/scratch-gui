@@ -1350,7 +1350,7 @@ function hull(pointset, concavity, format) {
         maxEdgeLen = concavity || 20;
 
     if (pointset.length < 4) {
-        return pointset.concat([pointset[0]]);
+        return pointset.slice();
     }
 
     points = _filterDuplicates(_sortByX(formatUtil.toXy(pointset, format)));
