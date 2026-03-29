@@ -26879,7 +26879,7 @@ class LibraryItem extends react__WEBPACK_IMPORTED_MODULE_2___default.a.PureCompo
   }
   render() {
     const iconMd5 = this.curIconMd5();
-    const iconURL = iconMd5 ? "".concat("https://zerocat-bitiful.houlangs.com/assets", "/").concat(iconMd5.slice(0, 2), "/").concat(iconMd5.slice(2, 4), "/").concat(iconMd5) : this.props.iconRawURL;
+    const iconURL = iconMd5 ? "".concat("https://s3-dq-1.cdn.houlang.cloud/sun-zerocat/assets", "/").concat(iconMd5.slice(0, 2), "/").concat(iconMd5.slice(2, 4), "/").concat(iconMd5) : this.props.iconRawURL;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_components_library_item_library_item_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
       intl: this.props.intl,
       bluetoothRequired: this.props.bluetoothRequired,
@@ -40473,7 +40473,7 @@ const ProjectFetcherHOC = function ProjectFetcherHOC(WrappedComponent) {
     vm: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.instanceOf(scratch_vm__WEBPACK_IMPORTED_MODULE_10___default.a)
   };
   ProjectFetcherComponent.defaultProps = {
-    assetHost: "https://zerocat-bitiful.houlangs.com/assets",
+    assetHost: "https://s3-dq-1.cdn.houlang.cloud/sun-zerocat/assets",
     projectHost: 'https://projects.scratch.mit.edu'
   };
   const mapStateToProps = state => ({
